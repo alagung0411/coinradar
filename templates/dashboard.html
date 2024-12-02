@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CoinRadar</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+
+<style>
+        body {
+            background-color: #f5f5f5;
+            font-family: Arial, sans-serif;
+        }
+
+        .navbar {
+            background-color: white;
+            padding: 20px;
+        }
+
+        .navbar-brand img {
+            height: 50px;
+            width: 50px;
+        }
+
+        .navbar-nav .nav-link {
+            color: black;
+            font-weight: bold;
+            margin-right: 20px;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #ff9900;
+        }
+
+        .search-bar {
+            background-color: #f5f5f5;
+            border: none;
+            padding: 10px;
+            border-radius: 20px;
+            width: 300px;
+        }
+
+        .search-bar:focus {
+            outline: none;
+        }
+
+        .search-icon {
+            color: #007bff;
+        }
+
+        .profile-icon {
+            font-size: 30px;
+            color: #007bff;
+        }
+
+        .article-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .article-card img {
+            border-radius: 10px;
+            width: 150px;
+            height: 100px;
+            object-fit: cover;
+            margin-right: 20px;
+        }
+
+        .article-card .btn {
+            margin-right: 10px;
+        }
+
+        .update-section {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 5px 5px 0px #000;
+            text-align: center;
+        }
+
+        .update-section .btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        .footer {
+            background-color: #181C14;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .footer .social a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .footer .social a:hover {
+            color: #febb19;
+        }
+
+        .footer .social-icons i {
+            font-size: 20px;
+            margin: 0 10px;
+            color: white;
+        }
+
+        .footer .social-icons i:hover {
+            color: #ff9900;
+        }
+
+        .footer .footer-links a {
+            color: white;
+            margin: 0 10px;
+            text-decoration: none;
+        }
+
+        .footer .footer-links a:hover {
+            color: #ff9900;
+        }
+
+        .footer .community-section {
+            background-color: #444;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .footer p.copyright {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #697565;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="https://placehold.co/50x50" alt="CoinRadar Logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Riset</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Berita</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Tips &amp; Trick</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Projects</a>
+                    </li>
+                </ul>
+                <form class="d-flex align-items-center">
+                    <input aria-label="Search" class="search-bar me-2" placeholder="Search Artikel" type="search" />
+                    <button class="btn" type="submit">
+                        <i class="fas fa-search search-icon"></i>
+                    </button>
+                </form>
+                <a href="#" class="ms-3">
+                    <i class="fas fa-user-circle profile-icon"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="article-card">
+                    <img src="https://storage.googleapis.com/a1aa/image/wfNUZMfTIMjioUX331zXFDKsQwcPba2myaejor1BMtNZekPPB.jpg"
+                        alt="Article Image 1">
+                    <div>
+                        <h5>Artikel Title</h5>
+                        <p>12 - Agustus 2024</p>
+                        <button class="btn btn-outline-primary">Update</button>
+                        <button class="btn btn-danger">Delete</button>
+                    </div>
+                </div>
+
+                <div class="article-card">
+                    <img src="https://storage.googleapis.com/a1aa/image/evu6nVYImdRGOihD8pmPSfQm7utwvZV0x2aGiD4tFqhNP5zTA.jpg"
+                        alt="Article Image 2">
+                    <div>
+                        <h5>Artikel Title</h5>
+                        <p>12 - Agustus 2024</p>
+                        <button class="btn btn-outline-primary">Update</button>
+                        <button class="btn btn-danger">Delete</button>
+                    </div>
+                </div>
+
+                <div class="article-card">
+                    <img src="https://storage.googleapis.com/a1aa/image/UiSkU0AL5DIoHdLzYe1OY1z8RWeihhepN8hfA2Ngpnto8kPPB.jpg"
+                        alt="Article Image 3">
+                    <div>
+                        <h5>Artikel Title</h5>
+                        <p>12 - Agustus 2024</p>
+                        <button class="btn btn-outline-primary">Update</button>
+                        <button class="btn btn-danger">Delete</button>
+                    </div>
+                </div>
+
+                <div class="article-card">
+                    <img src="https://storage.googleapis.com/a1aa/image/RbSFkC5PYVKKM1VLkzMH25FvX2ZB8YANn1hOT6mVxPeon85JA.jpg"
+                        alt="Article Image 4">
+                    <div>
+                        <h5>Artikel Title</h5>
+                        <p>12 - Agustus 2024</p>
+                        <button class="btn btn-outline-primary">Update</button>
+                        <button class="btn btn-danger">Delete</button>
+                    </div>
+                </div>
+
+                <div class="article-card">
+                    <img src="https://storage.googleapis.com/a1aa/image/eeEH45zw4nqG1En1fCVjaM2HfoulRPtyyMjjTmRsyDnO9kPPB.jpg"
+                        alt="Article Image 5">
+                    <div>
+                        <h5>Artikel Title</h5>
+                        <p>12 - Agustus 2024</p>
+                        <button class="btn btn-outline-primary">Update</button>
+                        <button class="btn btn-danger">Delete</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card update-section">
+                    <p><strong>CoinRadar Update</strong> Temukan berita terbaru seputar crypto, projek dan blockchain di
+                        notifikasi ketika bergabung bersama kami.</p>
+                    <button class="btn">Upload</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
+                <div class="social text-center mb-4 mb-md-0">
+                    <img src="https://placehold.co/250x150" alt="CoinRadar Logo" class="mb-2">
+                    <a href="#" class="d-block mb-2 text-decoration-none" style="font-weight: bold;"></a>
+                    <div class="footer-links mb-3 d-flex justify-content-center">
+                        <a href="#" class="me-3">Artikel</a>
+                        <a href="#" class="me-3">Tentang Kami</a>
+                        <a href="#">Kontak</a>
+                    </div>
+                    <div class="social-icons d-flex justify-content-center">
+                        <a href="#" class="me-3"><i class="fab fa-telegram"></i></a>
+                        <a href="#" class="me-3"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="card" style="width: 24rem; background-color: #3C3D37; color: white;">
+                        <div class="d-flex align-items-center p-2 mt-3 mx-3">
+                            <img src="https://placehold.co/50x50" alt="Logo" class="me-3"
+                                style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%;">
+                            <div class="text-start mx-3">
+                                <h5 class="card-title mb-0">CoinRadar Community</h5>
+                                <p class="mb-0" style="color: #697565;">@coinradar</p>
+                            </div>
+                        </div>
+
+                        <div class="card-body mt-0">
+                            <p class="card-text">
+                                "Kamu bisa join bersama kami di komunitas CoinRadar Telegram, dengan senang hati tunggu
+                                kalian di
+                                komunitas kami."
+                            </p>
+                        </div>
+                    </div>
+                    <p class="copyright text-center mt-3">
+                        @2024 - CoinRadar.id
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </footer>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+0U9W9AN4m9XrjFf8hG9QvK5Qf0G4"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

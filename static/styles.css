@@ -1,0 +1,154 @@
+/* Custom Styling */
+body {
+    font-family: Arial, sans-serif;
+    color: #333;
+}
+
+h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+h2 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.text-justify {
+    text-align: justify;
+}
+
+.nav-link {
+    color: #555;
+    font-weight: 500;
+    margin: 0 10px;
+    transition: color 0.3s;
+}
+
+.nav-link:hover {
+    color: #f39c12;
+}
+
+.social-links a {
+    display: inline-block;
+}
+
+.social-links img {
+    transition: transform 0.3s;
+}
+
+.social-links img:hover {
+    transform: scale(1.1);
+}
+
+/* General Styling */
+body {
+    font-family: Arial, sans-serif;
+    color: #333;
+}
+
+h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+h2 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+h1.italic {
+    font-style: italic;
+    }
+
+.text-justify {
+    text-align: justify;
+}
+
+.nav-link {
+    color: #555;
+    font-weight: 500;
+    margin: 0 10px;
+    transition: color 0.3s;
+}
+
+.nav-link:hover {
+    color: #f39c12;
+}
+
+.social-links a {
+    display: inline-block;
+}
+
+.social-links img {
+    transition: transform 0.3s;
+}
+
+.social-links img:hover {
+    transform: scale(1.1);
+}
+
+/* Contact Page Styling */
+.contact-form label {
+    font-weight: 600;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+/* Footer Styling */
+footer {
+    border-top: 1px solid #444;
+    background-color: #151515; /* Warna hitam pekat */
+    padding: 20px 0;
+}
+
+footer .social-links img {
+    /*filter: brightness(0) invert(1); /* Ikon terlihat jelas */
+    transition: transform 0.3s; /* Animasi hover */
+}
+
+footer .social-links img:hover {
+    transform: scale(1.1);
+}
+
+footer .bg-secondary {
+    background-color: #2a2a2a; /* Latar abu gelap */
+    border-radius: 8px;
+    padding: 20px;
+    color: #e6e6e6; /* Teks kontras tinggi */
+}
+
+footer .text-muted {
+    color: #6c757d;
+}
+
+footer a {
+    color: #e6e6e6;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+footer a:hover {
+    color: #ffcc00; /* Warna kuning pada hover */
+}
+
+@media (max-width: 768px) {
+    footer .d-flex {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    footer .social-links img {
+        margin: 10px 0;
+    }
+}
