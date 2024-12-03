@@ -273,6 +273,10 @@ button span {
     gap: 1rem;
 }
 .banner .article-banner {
+    position: relative;
+    display: flex;
+    place-content: center center;
+    text-align: left;
     border-radius: 1rem;
     overflow: hidden;
     object-position: center;
@@ -282,7 +286,21 @@ button span {
 .article-banner img {
     width: 100%;
     height: 100%;
+    /* border: 2px solid green; */
     object-fit: cover;
+}
+.article-banner::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: linear-gradient(
+        to top,
+        rgb(0 0 0 / .5), rgb(0 0 0 / 0)
+    );
+    z-index: 1px;
+    width: 100%;
+    height: 100%;
 }
 .banner .article-banner:nth-child(1) {
     grid-column: 1 / span 2;
@@ -293,6 +311,36 @@ button span {
 }
 .banner .article-banner:nth-child(3) {
     background-color: #ff9800;
+}
+
+.article-banner .wrap-article_info {
+    position: absolute;
+    display: block;
+    left: 0;
+    bottom: 20px;
+    width: 100%;
+    height: fit-content;
+    padding: 1rem 2rem;
+    letter-spacing: 1px;
+    color: #ffffff;
+    z-index: 4px;
+}
+.wrap-article_info h3 {
+    font-size: var(--fsz-m);
+    text-overflow: ellipsis;
+}
+.wrap-article_info p {
+    font-size: var(--fsz-s);
+    letter-spacing: 0;
+    transform: translateY(12px);
+}
+.wrap-article_info p > span {
+    font-size: var(--fsz-s);
+    display: inline-block;
+    padding: 4px 10px 6px;
+    border-radius: var(--br-link);
+    border: 1px solid var(--c-bg-primary);
+    transform: translateX(1.5rem);
 }
 
 /* --->> CONTENT <<--- */
@@ -342,6 +390,7 @@ button span {
     margin-left: 24px;
     width: 65%;
     height: 100%;
+    overflow: hidden;
 }
 .article-info .info {
     max-height: 60%;
@@ -352,6 +401,7 @@ button span {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    margin-bottom: 0.25rem;
 }
 .article-info p {
     font-size: 0.75rem;
@@ -370,6 +420,11 @@ button span {
     width: 100%;
     height: 40%;
     bottom: 0;
+}
+.describe p {
+    font-size: small;
+    line-height: 1.5;
+    text-overflow: ellipsis;
 }
 /* --->> ASIDE <<--- */
 .main .aside {
@@ -415,5 +470,8 @@ button span {
     font-weight: 600;
     font-size: medium;
     letter-spacing: 0.063rem;
+}
+.card-regist .btn-regist:hover {
+    filter: grayscale(20%);
 }
 /* ---------->>> MAIN - END <<-------------- */
