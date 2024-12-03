@@ -23,3 +23,21 @@
     lastScroll = currentScroll;
   });
 }
+
+// ---------------> TOGGLE - NAV <---------------
+{
+  const btnToggle = document.querySelector(".btn-toggle_nav");
+  const navMenu = document.querySelector(".nav-menu");
+
+  btnToggle.addEventListener("click", () => {
+    btnToggle.classList.toggle("active")
+    navMenu.classList.toggle("active")
+  })
+
+  document.querySelectorAll(".nav-link").forEach(n => {
+    n.addEventListener("click", () => {
+      btnToggle.classList.remove("active")
+      navMenu.classList.remove("active")
+    })
+  })
+}

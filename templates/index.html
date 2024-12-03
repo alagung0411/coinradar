@@ -4,45 +4,36 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Homepage</title>
-    <link rel="stylesheet" href="static/css/style.css" />
+    <link rel="stylesheet" href="../static/css/style.css" />
   </head>
   <body>
     <div class="grid-container">
       <header class="header">
         <div class="container-navigate">
           <div class="navigate">
+            
+            <div class="toggle-nav_section">
+              <nav class="link">
+                <ul class="nav-menu">
+                  <li class="nav-item"><a href="#" class="nav-link">Berita</a></li>
+                  <li class="nav-item"><a href="#" class="nav-link">Riset</a></li>
+                  <li class="nav-item"><a href="#" class="nav-link">Tips & Trick</a></li>
+                  <li class="nav-item"><a href="#" class="nav-link">Projects</a></li>
+                </ul>
+              </nav>
+            </div>
             <div class="wrap-left">
-              <span class="Bars3BottomLeft">
-                <svg
-                  data-slot="icon"
-                  fill="none"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                  aria-hidden="true"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12"
-                  ></path>
-                </svg>
-              </span>
               <a class="logo" href="#">
                 <img
-                  src="static/assets/img/ForLogo-removebg-preview.png"
+                  src="../static/assets/img/ForLogo-removebg-preview.png"
                   alt="Logo CoinRadar"
                 />
               </a>
-              <nav class="link">
-                <ul>
-                  <li><a href="#">Berita</a></li>
-                  <li><a href="#">Riset</a></li>
-                  <li><a href="#">Tips & Trick</a></li>
-                  <li><a href="#">Projects</a></li>
-                </ul>
-              </nav>
+              <div class="btn-toggle_nav">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+              </div>
             </div>
             <div class="wrap-right">
               <div class="wrap-input">
@@ -81,7 +72,7 @@
                   <span>Toggle dashboard menu</span>
 
                   <img
-                    src="static/assets/img/Multiavatar-Skeleto.png"
+                    src="../static/assets/img/Multiavatar-Skeleto.png"
                     alt="avatar profile"
                     class="size-10 object-cover"
                   />
@@ -94,7 +85,7 @@
                 >
                   <div class="wrap-menu">
                     <img
-                      src="static/assets/img/Multiavatar-Skeleto.png"
+                      src="../static/assets/img/Multiavatar-Skeleto.png"
                       alt="avatar profile"
                     />
                     <div class="username">Username</div>
@@ -133,20 +124,20 @@
       <main class="main">
         <div class="banner">
           <div class="article-banner">
-            <img src="static/assets/img/thumbnaile-1.jpg" alt="" />
+            <img src="../static/assets/img/thumbnaile-1.jpg" alt="" />
           </div>
           <div class="article-banner">
-            <img src="static/assets/img/thumbnaile-1.jpg" alt="" />
+            <img src="../static/assets/img/thumbnaile-1.jpg" alt="" />
           </div>
           <div class="article-banner">
-            <img src="static/assets/img/thumbnaile-1.jpg" alt="" />
+            <img src="../static/assets/img/thumbnaile-1.jpg" alt="" />
           </div>
         </div>
         <div class="content">
           <div class="list-articles">
             <article class="card-article 1">
               <div class="thumbnaile">
-                <img src="static/assets/img/thumbnaile-1.jpg" alt="" />
+                <img src="../static/assets/img/thumbnaile-1.jpg" alt="" />
               </div>
               <div class="article-info">
                 <div class="info">
@@ -166,7 +157,7 @@
             </article>
             <article class="card-article 2">
               <div class="thumbnaile">
-                <img src="static/assets/img/thumbnaile-2.jpg" alt="" />
+                <img src="../static/assets/img/thumbnaile-2.jpg" alt="" />
               </div>
               <div class="article-info">
                 <div class="info">
@@ -186,7 +177,7 @@
             </article>
             <article class="card-article 3">
               <div class="thumbnaile">
-                <img src="static/assets/img/thumbnaile-3.jpg" alt="" />
+                <img src="../static/assets/img/thumbnaile-3.jpg" alt="" />
               </div>
               <div class="article-info">
                 <div class="info">
@@ -206,7 +197,7 @@
             </article>
             <article class="card-article 4">
               <div class="thumbnaile">
-                <img src="static/assets/img/thumbnaile-4.jpg" alt="" />
+                <img src="../static/assets/img/thumbnaile-4.jpg" alt="" />
               </div>
               <div class="article-info">
                 <div class="info">
@@ -226,7 +217,7 @@
             </article>
             <article class="card-article 5">
               <div class="thumbnaile">
-                <img src="static/assets/img/thumbnaile-5.jpg" alt="" />
+                <img src="../static/assets/img/thumbnaile-5.jpg" alt="" />
               </div>
               <div class="article-info">
                 <div class="info">
@@ -262,7 +253,7 @@
             <div>
               <div class="logo">
                 <img
-                  src="static/assets/img/ForLogo-removebg-preview.png"
+                  src="../static/assets/img/ForLogo-removebg-preview.png"
                   alt="logo CoinRadar"
                 />
               </div>
@@ -348,14 +339,11 @@
               </div>
             </div>
 
-            <!-- class="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-4 lg:col-span-2" -->
             <div class="wrap-card_info">
               <div class="card-info">
                 <div class="info">
-                  <!-- <div class="circle-logo" style="border: 1px solid purple;">
-                </div> -->
                   <img
-                    src="static/assets/img/CoinRadarLogo-removebg-preview.png"
+                    src="../static/assets/img/CoinRadarLogo-removebg-preview.png"
                     alt=""
                     style="width: 50px; height: auto"
                   />
