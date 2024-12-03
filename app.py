@@ -16,7 +16,7 @@ def contact():
 
 @app.route('/dashboard')
 def dashboard():
-    return render_template('dashboard.html')
+    return render_template('AdminPage.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
