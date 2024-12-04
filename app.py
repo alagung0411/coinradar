@@ -2,6 +2,10 @@ from flask import Flask, render_template, request, redirect, url_for, session, f
 from pymongo import MongoClient
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
+from dotenv import load_dotenv
+from werkzeug.utils import secure_filename
+
+load_dotenv()
 
 
 MONGODB_URI = os.environ.get("MONGODB_URI")
@@ -13,6 +17,9 @@ db = client[DB_NAME]
 app = Flask(__name__)
 
 app.secret_key = os.urandom(24)
+
+UPLOAD_FOLDER = 'static/uploads'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route('/')
 def home():
@@ -90,6 +97,45 @@ def publish():
 @app.route('/singlepage')
 def singlepage():
     return render_template('singlepage.html')
+
+# Logic Publish Articles
+
+@app.route('/publish', methods=['GET', 'POST'])
+def publish_article():
+    if request.method == 'POST':
+        title = request.form['title']
+        description = request.form['description']
+        category = request.form['category']
+        
+        # Check if a file was uploaded
+        if 'thumbnail' in request.files:
+            thumbnail_file = request.files['thumbnail']
+            if thumbnail_file and allowed_file(thumbnail_file.filename):
+                # Secure the file name and save it
+                filename = secure_filename(thumbnail_file.filename)
+                thumbnail_file.save(os.path.join('static/uploads', filename))
+                thumbnail_path = f'uploads/{filename}'
+            else:
+                thumbnail_path = None
+        else:
+            thumbnail_path = None
+
+        # Save the article data to MongoDB
+        db.articles.insert_one({
+            'title': title,
+            'description': description,
+            'category': category,
+            'thumbnail': thumbnail_path
+        })
+        flash('Article published successfully!', 'success')
+        return redirect(url_for('publish'))
+
+    return render_template('publish.html')
+
+def allowed_file(filename):
+    # Ensure the file has a valid extension
+    allowed_extensions = {'png', 'jpg', 'jpeg', 'gif'}
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in allowed_extensions
 
 if __name__ == '__main__':
     app.run(debug=True)
