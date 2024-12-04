@@ -6,6 +6,7 @@ from flask import Flask, render_template, request, redirect, url_for, session, f
 from pymongo import MongoClient
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
+from werkzeug.utils import secure_filename
 
 
 MONGODB_URI = os.environ["MONGODB_URI"]
@@ -17,6 +18,9 @@ db = client[DB_NAME]
 app = Flask(__name__)
 
 app.secret_key = bytes.fromhex(os.environ['SECRET_KEY'])
+
+UPLOAD_FOLDER = 'static/uploads'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route('/')
 def home():
@@ -87,9 +91,38 @@ def logout():
     flash('You have logged out.', 'info')
     return redirect(url_for('home'))
 
-@app.route('/publish')
-def publish():
+@app.route('/publish', methods=['GET', 'POST'])
+def publish_article():
+    if request.method == 'POST':
+        title = request.form['title']
+        description = request.form['description']
+        category = request.form['category']
+        
+        if 'thumbnail' in request.files:
+            thumbnail_file = request.files['thumbnail']
+            if thumbnail_file and allowed_file(thumbnail_file.filename):
+                filename = secure_filename(thumbnail_file.filename)
+                thumbnail_file.save(os.path.join('static/uploads', filename))
+                thumbnail_path = f'uploads/{filename}'
+            else:
+                thumbnail_path = None
+        else:
+            thumbnail_path = None
+
+        db.articles.insert_one({
+            'title': title,
+            'description': description,
+            'category': category,
+            'thumbnail': thumbnail_path
+        })
+        flash('Article published successfully!', 'success')
+        return redirect(url_for('publish_article'))
+
     return render_template('publish.html')
+
+def allowed_file(filename):
+    allowed_extensions = {'png', 'jpg', 'jpeg', 'gif'}
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in allowed_extensions
 
 @app.route('/singlepage')
 def singlepage():
