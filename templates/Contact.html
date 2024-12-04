@@ -1,122 +1,35 @@
-<!DOCTYPE html>
-<html lang="id">
+{% extends "layouts/base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Me - CoinRadar.ID</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="/static/styles.css">
-    <!-- jQuery CDN -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-</head>
+{% block extrahead %}
+<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- <link rel="stylesheet" href="/static/contact.css"> -->
+{% endblock %}
 
-<body>
-    <!-- Header -->
-    <header class="bg-light border-bottom py-3">
-        <div class="container d-flex justify-content-between align-items-center">
-            <div class="logo">
-                <img src="/static/logofooter.png" alt="CoinRadar Logo" class="img-fluid" style="width: 100px;">
+{% block content %}
+<main class="container my-5">
+    <section class="contact-form mt-4">
+        <form id="contactForm" class="mx-auto" style="max-width: 600px;">
+            <div>
+                <h1 class="mb-3"><span class="emoji">📥</span> Contact Me</h1>
             </div>
-            <nav class="nav">
-                <a class="nav-link" href="#riset">Riset</a>
-                <a class="nav-link" href="#berita">Berita</a>
-                <a class="nav-link" href="#tips">Tips & Trick</a>
-                <a class="nav-link" href="#projects">Projects</a>
-            </nav>
-            <div class="search d-flex">
-                <input type="text" class="form-control" placeholder="Search Artikel">
-                <button class="btn btn-outline-secondary ms-2">🔍</button>
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" required>
             </div>
-        </div>
-    </header>
-
-    <!-- Main Content -->
-    <main class="container my-5">
-        <section class="contact-form mt-4">
-            <form id="contactForm" class="mx-auto" style="max-width: 600px;">
-                <div>
-                    <h1 class="mb-3"><span class="emoji">📥</span> Contact Me</h1>
-                </div>
-                <div class="mb-3">
-                    <label for="name" class="form-label">Name</label>
-                    <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name"
-                        required>
-                </div>
-                <div class="mb-3">
-                    <label for="email" class="form-label">Surel</label>
-                    <input type="email" class="form-control" id="email" name="email" placeholder="Example@gmail.com"
-                        required>
-                </div>
-                <div class="mb-3">
-                    <label for="message" class="form-label">Message</label>
-                    <textarea class="form-control" id="message" name="message" rows="5"
-                        placeholder="Type your message here..." required></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary w-100">Submit</button>
-            </form>
-            <div id="statusMessage" class="mt-3"></div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-dark text-light py-4">
-        <div class="container">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <!-- Logo -->
-                <div>
-                    <img src="/static/logofooter.png" alt="CoinRadar Logo" class="img-fluid" style="width: 200px;">
-                    <!-- Navigation Links -->
-                    <div class="mt-3">
-                        <a href="/articles" class="text-light text-decoration-none mx-3">Artikel</a>
-                        <a href="/about" class="text-light text-decoration-none mx-3">Tentang Kami</a>
-                        <a href="/contact" class="text-light text-decoration-none mx-3">Kontak</a>
-                    </div>
-                </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Surel</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Example@gmail.com"
+                    required>
             </div>
-        </div>
-    </footer>
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-    <!-- jQuery Ajax Script -->
-    <script>
-        $(document).ready(function () {
-            $('#contactForm').on('submit', function (e) {
-                e.preventDefault(); // Mencegah form reload
-
-                // Ambil data form
-                const formData = {
-                    name: $('#name').val(),
-                    email: $('#email').val(),
-                    message: $('#message').val()
-                };
-
-                // Kirim data ke Flask menggunakan Ajax
-                $.ajax({
-                    url: '/send-message',
-                    type: 'POST',
-                    contentType: 'application/json',
-                    data: JSON.stringify(formData),
-                    success: function (response) {
-                        $('#statusMessage').html(
-                            `<div class="alert alert-success">${response.message}</div>`
-                        );
-                        $('#contactForm')[0].reset(); // Reset form setelah berhasil
-                    },
-                    error: function (xhr) {
-                        const errorMessage = xhr.responseJSON?.error || 'An error occurred!';
-                        $('#statusMessage').html(
-                            `<div class="alert alert-danger">${errorMessage}</div>`
-                        );
-                    }
-                });
-            });
-        });
-    </script>
-</body>
-
-</html>
+            <div class="mb-3">
+                <label for="message" class="form-label">Message</label>
+                <textarea class="form-control" id="message" name="message" rows="5"
+                    placeholder="Type your message here..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Submit</button>
+        </form>
+        <div id="statusMessage" class="mt-3"></div>
+    </section>
+</main>
+{% endblock %}

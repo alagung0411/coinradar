@@ -1,18 +1,22 @@
+from dotenv import load_dotenv
+
+load_dotenv()
+
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from pymongo import MongoClient
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
 
 
-MONGODB_URI = os.environ.get("MONGODB_URI")
-DB_NAME = os.environ.get("DB_NAME")
+MONGODB_URI = os.environ["MONGODB_URI"]
+DB_NAME = os.environ["DB_NAME"]
 
 client = MongoClient(MONGODB_URI)
 db = client[DB_NAME]
 
 app = Flask(__name__)
 
-app.secret_key = os.urandom(24)
+app.secret_key = bytes.fromhex(os.environ['SECRET_KEY'])
 
 @app.route('/')
 def home():
