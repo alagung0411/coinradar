@@ -198,6 +198,7 @@
                 opacity: 1;
             }
         }
+        
 
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -216,22 +217,21 @@
             <h2>Login</h2>
             <p>Please Login to Your Account.</p>
             <p>Haven't an account? <a href="/signup">Sign Up</a></p>
-            <div class="form-group">
-                <i class="icon-left fas fa-user"></i>
-                <input type="text" placeholder="Username" required>
-            </div>
-            <div class="form-group">
-                <i class="icon-left fas fa-lock"></i>
-                <input type="password" id="password" placeholder="Password" required>
-                <i class="icon-right fas fa-eye" id="toggle-password" onclick="togglePassword()"></i>
-            </div>
-            <button class="btn">Login</button>
+            <form action="/login" method="POST">
+                <div class="form-group">
+                    <i class="icon-left fas fa-user"></i>
+                    <input type="text" name="username" placeholder="Username" required>
+                </div>
+                <div class="form-group">
+                    <i class="icon-left fas fa-lock"></i>
+                    <input type="password" name="password" id="password" placeholder="Password" required>
+                    <i class="icon-right fas fa-eye" id="toggle-password" onclick="togglePassword()"></i>
+                </div>
+                <button class="btn" type="submit">Login</button>
+            </form>
             <div class="google-section">
                 <p>or continue with account</p>
-                <img 
-                    src="static/google.png" 
-                    alt="Google Logo" 
-                    class="google-logo">
+                <img src="static/google.png" alt="Google Logo" class="google-logo">
             </div>
             <div class="footer">© 2024 CoinRadar. All rights reserved.</div>
         </div>

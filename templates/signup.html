@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -126,54 +125,11 @@
 
         .form-group input {
             width: 100%;
-            padding: 12px 40px 12px 40px;
-            /* Space for icons */
+            padding: 12px 40px 12px 45px; /* padding untuk ikon */
             border: 1px solid #ccc;
             border-radius: 5px;
             font-size: 16px;
-            padding-left: 45px;
-            /* Adjusted padding for icon space */
-        }
-
-        .form-group input:focus {
-            border-color: #007bff;
-            outline: none;
-        }
-
-        .form-group .icon-left {
-            position: absolute;
-            left: 15px;
-            /* Adjusted left position for better alignment */
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 18px;
-            color: #555;
-        }
-
-        .form-group .icon-right {
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 18px;
-            color: #555;
-            cursor: pointer;
-        }
-
-        .form-group {
-            position: relative;
-            margin-bottom: 20px;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 12px 40px 12px 45px;
-            /* padding untuk ikon */
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 16px;
-            box-sizing: border-box;
-            /* Pastikan lebar termasuk padding dan border */
+            box-sizing: border-box; /* Pastikan lebar termasuk padding dan border */
             transition: border-color 0.3s ease;
         }
 
@@ -184,8 +140,7 @@
 
         .form-group .icon-left {
             position: absolute;
-            left: 15px;
-            /* Jarak antara ikon dan border kiri */
+            left: 15px; /* Jarak antara ikon dan border kiri */
             top: 50%;
             transform: translateY(-50%);
             font-size: 18px;
@@ -194,8 +149,7 @@
 
         .form-group .icon-right {
             position: absolute;
-            right: 10px;
-            /* Jarak ikon di kanan */
+            right: 10px; /* Jarak ikon di kanan */
             top: 50%;
             transform: translateY(-50%);
             font-size: 18px;
@@ -252,7 +206,6 @@
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
-
 <body>
     <div class="wrapper">
         <img src="static/logo.png" alt="Logo" class="logo">
@@ -266,24 +219,32 @@
         </div>
         <div class="signup-section">
             <h2>Sign Up</h2>
-            <p class="login-text">Already have an account? <a href="/">Sign In</a></p>
-            <div class="form-group">
-                <i class="icon-left fas fa-user"></i>
-                <input type="text" placeholder="Username" required>
-            </div>
-            <div class="form-group">
-                <i class="icon-left fas fa-envelope"></i>
-                <input type="email" placeholder="Email" required>
-            </div>
-            <div class="form-group">
-                <i class="icon-left fas fa-lock"></i>
-                <input type="password" id="password" placeholder="Password" required>
-                <i class="icon-right fas fa-eye" id="toggle-password" onclick="togglePassword()"></i>
-            </div>
-            <button class="btn">Sign Up</button>
+            <p class="login-text">Already have an account? <a href="/login">Sign In</a></p>
+            <form action="/signup" method="POST">
+                <div class="form-group">
+                    <i class="icon-left fas fa-user"></i>
+                    <input type="text" name="username" placeholder="Username" required>
+                </div>
+                <div class="form-group">
+                    <i class="icon-left fas fa-envelope"></i>
+                    <input type="email" name="email" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <i class="icon-left fas fa-lock"></i>
+                    <input type="password" id="password" name="password" placeholder="Password" required>
+                    <i class="icon-right fas fa-eye" id="toggle-password" onclick="togglePassword()"></i>
+                </div>
+                <div class="form-group">
+                    <input type="hidden" name="avatar" id="avatar-input" value="https://api.multiavatar.com/random.svg">
+                </div>
+                <button class="btn" type="submit">Sign Up</button>
+            </form>
             <div class="google-section">
                 <p>or continue with account</p>
-                <img src="static/google.png" alt="Google Logo" class="google-logo">
+                <img 
+                    src="static/google.png" 
+                    alt="Google Logo" 
+                    class="google-logo">
             </div>
             <div class="footer">© 2024 CoinRadar. All rights reserved.</div>
         </div>
@@ -301,28 +262,26 @@
                 avatarOption.className = 'avatar-option';
                 avatarOption.innerHTML = `<img src="https://api.multiavatar.com/${randomId}.svg" alt="Avatar">`;
                 avatarOption.onclick = function () {
-                    document.getElementById('avatar').src = avatarOption.querySelector('img').src;
+                    const selectedAvatar = avatarOption.querySelector('img').src;
+                    document.getElementById('avatar').src = selectedAvatar;
+                    document.getElementById('avatar-input').value = selectedAvatar;
                 };
                 avatarGrid.appendChild(avatarOption);
             }
         }
 
-        // Function to toggle password visibility
+        // Toggle password visibility
         function togglePassword() {
-            const passwordInput = document.getElementById('password');
-            const toggleIcon = document.getElementById('toggle-password');
-
-            if (passwordInput.type === "password") {
-                passwordInput.type = "text";
-                toggleIcon.classList.remove('fa-eye');
-                toggleIcon.classList.add('fa-eye-slash');
+            const passwordField = document.getElementById('password');
+            const passwordToggle = document.getElementById('toggle-password');
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                passwordToggle.classList.replace('fa-eye', 'fa-eye-slash');
             } else {
-                passwordInput.type = "password";
-                toggleIcon.classList.remove('fa-eye-slash');
-                toggleIcon.classList.add('fa-eye');
+                passwordField.type = 'password';
+                passwordToggle.classList.replace('fa-eye-slash', 'fa-eye');
             }
         }
     </script>
 </body>
-
 </html>
