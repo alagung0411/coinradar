@@ -41,3 +41,49 @@
     })
   })
 }
+
+
+// ---------------> Drag & Drop <---------------
+{
+  const dropzone = document.getElementById("dropzone");
+  const thumbnailInput = document.getElementById("thumbnail");
+  const preview = document.getElementById("preview");
+  
+  dropzone.addEventListener("click", () => {
+      thumbnailInput.click();
+  });
+  
+  dropzone.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      dropzone.classList.add("border-primary");
+  });
+  
+  dropzone.addEventListener("dragleave", () => {
+      dropzone.classList.remove("border-primary");
+  });
+  
+  dropzone.addEventListener("drop", (e) => {
+      e.preventDefault();
+      dropzone.classList.remove("border-primary");
+      const file = e.dataTransfer.files[0];
+      handleFile(file);
+  });
+  
+  thumbnailInput.addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      handleFile(file);
+  });
+  
+  function handleFile(file) {
+      if (file && file.size <= 2 * 1024 * 1024) { // Max 2MB
+          const reader = new FileReader();
+          reader.onload = (e) => {
+              preview.src = e.target.result;
+              preview.classList.remove("d-none");
+          };
+          reader.readAsDataURL(file);
+      } else {
+          alert("File size must be less than 2MB.");
+      }
+  }
+}
