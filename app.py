@@ -14,9 +14,9 @@ def about():
 def contact():
     return render_template('Contact.html')
 
-@app.route('/dashboard')
+@app.route('/adminpage')
 def dashboard():
-    return render_template('dashboard.html')
+    return render_template('AdminPage.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
