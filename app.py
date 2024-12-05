@@ -6,11 +6,15 @@ from flask import Flask, render_template, request, redirect, url_for, session, f
 from pymongo import MongoClient
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
+from telebot import TeleBot
 from werkzeug.utils import secure_filename
 
 
 MONGODB_URI = os.environ["MONGODB_URI"]
 DB_NAME = os.environ["DB_NAME"]
+
+TELEGRAM_BOT_TOKEN = os.environ["TELEGRAM_BOT_TOKEN"]
+TELEGRAM_ID = os.environ["TELEGRAM_ID"]
 
 client = MongoClient(MONGODB_URI)
 db = client[DB_NAME]
@@ -30,9 +34,26 @@ def home():
 def about():
     return render_template('About.html')
 
-@app.route('/contact')
+@app.route('/contact', methods = ['GET', 'POST'])
 def contact():
-    return render_template('Contact.html')
+    if request.method == 'GET':
+        return render_template('Contact.html')
+
+    name = request.form['name']
+    email = request.form['email']
+    message = request.form['message']
+
+    bot = TeleBot(TELEGRAM_BOT_TOKEN, parse_mode = 'HTML', threaded = False)
+    text = f"""
+Ada request artikel dari {name} {email}
+
+Isi Pesan: {message} 
+""".strip()
+    print(TELEGRAM_ID)
+    print(bot.get_me())
+    bot.send_message(TELEGRAM_ID, text)
+    flash("Pesan berhasil dikirim", 'success')
+    return redirect('/contact')
 
 @app.route('/adminpage')
 def dashboard():
