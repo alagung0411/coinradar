@@ -39,8 +39,8 @@
                             <div>
                                 <h5>${article.title}</h5>
                                 <p>${new Date(article.published_at).toLocaleDateString('id-ID')}</p>
-                                <button class="btn btn-outline-primary">Update</button>
-                                <button class="btn btn-danger">Delete</button>
+                                <button class="btn btn-outline-primary" onclick="location.href='/update_article/${article.title}'">Update</button>
+                                <button class="btn btn-danger" onclick="deleteArticle('${article.title}')">Delete</button>
                             </div>
                         </div>
                     `;

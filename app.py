@@ -141,5 +141,31 @@ def get_articles():
     articles = list(db.articles.find({}, {'_id': 0}))  # Ambil semua artikel dari MongoDB, tanpa menyertakan `_id`.
     return {'articles': articles}, 200
 
+@app.route('/update_article/<string:title>', methods=['GET', 'POST'])
+def update_article(title):
+    if request.method == 'POST':
+        # Ambil data dari form
+        new_title = request.form['title']
+        description = request.form['description']
+        category = request.form['category']
+        
+        # Perbarui data di MongoDB
+        db.articles.update_one(
+            {'title': title},  # Cari berdasarkan judul lama
+            {'$set': {
+                'title': new_title,
+                'description': description,
+                'category': category,
+                'updated_at': datetime.now()
+            }}
+        )
+        flash('Article updated successfully!', 'success')
+        return redirect(url_for('dashboard'))
+
+    # Ambil artikel untuk di-update berdasarkan judul
+    article = db.articles.find_one({'title': title})
+    return render_template('update.html', article=article)
+
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run('0.0.0.0', port=5000, debug=True)
