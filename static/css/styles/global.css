@@ -172,7 +172,7 @@ header {
     display: block;
 
     @media (min-width: 1024px) {
-        transform: translateX(-80%);
+        transform: translateX(-40%);
         order: 1;
     }
 }

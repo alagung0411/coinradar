@@ -1,25 +1,5 @@
 @import "./styles/global.css";
 
-/* body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f8f9fa;
-    color: #333;
-} */
-
-/* .container {
-    max-width: 100%;
-    width: 90%;
-    max-width: 800px;
-    margin: 50px auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-} */
-
-
 /* ---------->>> HEADER - START <<---------- */
 header {
     position: sticky;
@@ -259,7 +239,8 @@ button span {
 /* ---------->>> HEADER - END <<------------ */
 
 /* ---------->>> MAIN - START <<------------ */
-.main {
+/* Hanya memengaruhi elemen di dalam main */
+.main-container {
     grid-area: main;
     min-block-size: 100vh;
     min-block-size: 100dvh;
@@ -267,95 +248,74 @@ button span {
     grid-template-columns: 1fr;
     grid-template-rows: auto;
     padding-block: 1rem;
-    width: min(95%, 40rem);
+    width: min(95%, 50rem);
     margin-inline: auto;
-}
-.contact-form {
-    margin-top: 20px;
+    text-align: center;
 }
 
-h1 {
+.main-container .welcome-section .logo {
+    max-width: 200px;
+    margin-bottom: 20px;
+}
+
+.main-container h1 {
     font-size: 2rem;
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-h1 .emoji {
-    margin-right: 10px;
-}
-
-.form-label {
-    display: block;
-    margin-bottom: 5px;
     font-weight: bold;
+    margin-bottom: 1rem;
 }
 
-.form-control {
-    width: 100%;
-    max-width: 100%;
-    padding: 10px;
-    border: 1px solid #ced4da;
-    border-radius: 4px;
+.main-container h2.about-title {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 2rem;
+}
+
+.main-container h1.italic {
+    font-style: italic;
+}
+
+.main-container .text-justify {
+    text-align: center justify;
+    text-justify: inter-word;
+    margin-bottom: 0.875rem;
+}
+
+.main-container .highlight {
+    color: #f39c12;
+}
+
+.main-container .social-title {
     font-size: 1rem;
-    color: #495057;
-    box-sizing: border-box;
-}
-
-.form-control:focus {
-    border-color: #80bdff;
-    outline: none;
-    box-shadow: 0 0 4px rgba(0, 123, 255, 0.25);
-}
-
-.form-control::placeholder {
-    color: #6c757d;
-}
-
-.mb-3 {
-    margin-bottom: 20px;
-}
-
-.btn {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    font-size: var(--fsz-base);
-    letter-spacing: 1.5px;
-    font-weight: var(--fwg-semi-bold);
-    color: #fff;
-    background-color: var(--c-blue-primary);
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    text-align: center;
-    transition: background-color 0.3s ease;
-}
-
-.btn:hover {
-    background-color: var(--c-blue-secondary);
-}
-
-#statusMessage {
-    text-align: center;
     margin-top: 20px;
-    font-size: 1rem;
-    color: #28a745;
 }
 
-/* Media Query untuk tampilan lebih kecil */
-@media (max-width: 600px) {
-    h1 {
-        font-size: 1.5rem;
+.main-container .social-links {
+    margin-top: 10px;
+}
+
+.main-container .social-links a {
+    display: inline-block;
+    margin: 0 10px;
+}
+
+.main-container .social-links img {
+    width: 40px;
+    height: 40px;
+    transition: transform 0.3s;
+}
+
+.main-container .social-links img:hover {
+    transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+    .main-container {
+        padding: 10px;
     }
 
-    .form-control {
-        font-size: 0.9rem;
-        padding: 8px;
-    }
-
-    .btn {
-        font-size: 0.9rem;
-        padding: 8px;
+    .main-container .social-links img {
+        width: 35px;
+        height: 35px;
     }
 }
 
