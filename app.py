@@ -7,6 +7,7 @@ from pymongo import MongoClient
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
 from werkzeug.utils import secure_filename
+from datetime import datetime
 
 
 MONGODB_URI = os.environ["MONGODB_URI"]
@@ -98,23 +99,30 @@ def publish_article():
         description = request.form['description']
         category = request.form['category']
         
+        # Mengelola file thumbnail (jika ada)
         if 'thumbnail' in request.files:
             thumbnail_file = request.files['thumbnail']
             if thumbnail_file and allowed_file(thumbnail_file.filename):
                 filename = secure_filename(thumbnail_file.filename)
-                thumbnail_file.save(os.path.join('static/uploads', filename))
+                thumbnail_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
                 thumbnail_path = f'uploads/{filename}'
             else:
                 thumbnail_path = None
         else:
             thumbnail_path = None
 
+        # Buat tanggal publikasi secara otomatis
+        published_at = datetime.now()
+
+        # Simpan data artikel ke MongoDB
         db.articles.insert_one({
             'title': title,
             'description': description,
             'category': category,
-            'thumbnail': thumbnail_path
+            'thumbnail': thumbnail_path,
+            'published_at': published_at  # Tanggal otomatis
         })
+
         flash('Article published successfully!', 'success')
         return redirect(url_for('publish_article'))
 
@@ -127,6 +135,11 @@ def allowed_file(filename):
 @app.route('/singlepage')
 def singlepage():
     return render_template('singlepage.html')
+
+@app.route('/articles', methods=['GET'])
+def get_articles():
+    articles = list(db.articles.find({}, {'_id': 0}))  # Ambil semua artikel dari MongoDB, tanpa menyertakan `_id`.
+    return {'articles': articles}, 200
 
 if __name__ == '__main__':
     app.run(debug=True)
