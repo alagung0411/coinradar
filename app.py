@@ -120,7 +120,7 @@ def publish_article():
             'description': description,
             'category': category,
             'thumbnail': thumbnail_path,
-            'published_at': published_at  # Tanggal otomatis
+            'published_at': published_at  
         })
 
         flash('Article published successfully!', 'success')

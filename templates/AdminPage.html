@@ -30,7 +30,7 @@
             .then(response => response.json())
             .then(data => {
                 const articlesContainer = document.querySelector('.article-content');
-                articlesContainer.innerHTML = ''; // Kosongkan container sebelum menyisipkan data baru.
+                articlesContainer.innerHTML = ''; 
 
                 data.articles.forEach(article => {
                     const articleCard = `
@@ -38,7 +38,7 @@
                             <img src="/static/${article.thumbnail || 'default-thumbnail.jpg'}" alt="Article Image">
                             <div>
                                 <h5>${article.title}</h5>
-                                <p>${new Date(article.published_at).toLocaleDateString('id-ID')}</p>
+                                <p>${new Date(article.published_at).toLocaleString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
                                 <button class="btn btn-outline-primary" onclick="location.href='/update_article/${article.title}'">Update</button>
                                 <button class="btn btn-danger" onclick="deleteArticle('${article.title}')">Delete</button>
                             </div>
@@ -58,7 +58,7 @@
                 .then(response => {
                     if (response.ok) {
                         alert('Article deleted successfully!');
-                        location.reload(); // Refresh halaman setelah artikel dihapus
+                        location.reload(); 
                     } else {
                         alert('Failed to delete the article.');
                     }
