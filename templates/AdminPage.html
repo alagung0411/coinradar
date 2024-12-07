@@ -49,6 +49,23 @@
             })
             .catch(err => console.error('Error fetching articles:', err));
     });
+
+    function deleteArticle(title) {
+        if (confirm(`Are you sure you want to delete the article "${title}"?`)) {
+            fetch(`/delete_article/${title}`, {
+                method: 'POST',
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Article deleted successfully!');
+                        location.reload(); // Refresh halaman setelah artikel dihapus
+                    } else {
+                        alert('Failed to delete the article.');
+                    }
+                })
+                .catch(err => console.error('Error deleting article:', err));
+        }
+    }
 </script>
 
 

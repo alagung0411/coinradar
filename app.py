@@ -166,6 +166,15 @@ def update_article(title):
     article = db.articles.find_one({'title': title})
     return render_template('update.html', article=article)
 
+@app.route('/delete_article/<string:title>', methods=['POST'])
+def delete_article(title):
+    # Hapus artikel berdasarkan judul
+    result = db.articles.delete_one({'title': title})
+    if result.deleted_count > 0:
+        flash('Article deleted successfully!', 'success')
+    else:
+        flash('Failed to delete the article. Article not found.', 'error')
+    return redirect(url_for('dashboard'))
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
