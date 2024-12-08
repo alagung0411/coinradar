@@ -496,6 +496,9 @@ footer > .wrap-footer {
 .wrap-link_page__footer > ul > li > a {
     color: inherit;
 }
+.wrap-link_page__footer > ul > li > a:hover {
+    color: var(--c-bg-tertiary);
+}
 .wrap-link_social__footer ul {
     display: flex; 
     margin-top: 2rem; 
