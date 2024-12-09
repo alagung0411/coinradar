@@ -9,6 +9,7 @@ import os
 from telebot import TeleBot
 from werkzeug.utils import secure_filename
 from datetime import datetime
+from datetime import datetime
 
 
 MONGODB_URI = os.environ["MONGODB_URI"]
@@ -153,10 +154,12 @@ def publish_article():
         description = request.form['description']
         category = request.form['category']
         
+        # Mengelola file thumbnail (jika ada)
         if 'thumbnail' in request.files:
             thumbnail_file = request.files['thumbnail']
             if thumbnail_file and allowed_file(thumbnail_file.filename):
                 filename = secure_filename(thumbnail_file.filename)
+                thumbnail_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
                 thumbnail_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
                 thumbnail_path = f'uploads/{filename}'
             else:
@@ -164,15 +167,20 @@ def publish_article():
         else:
             thumbnail_path = None
 
+        # Buat tanggal publikasi secara otomatis
         published_at = datetime.now()
 
+        # Simpan data artikel ke MongoDB
         db.articles.insert_one({
             'title': title,
             'description': description,
             'category': category,
             'thumbnail': thumbnail_path,
             'published_at': published_at  
+            'thumbnail': thumbnail_path,
+            'published_at': published_at  
         })
+
 
         flash('Article published successfully!', 'success')
         return redirect(url_for('publish_article'))
@@ -189,18 +197,20 @@ def singlepage():
 
 @app.route('/articles', methods=['GET'])
 def get_articles():
-    articles = list(db.articles.find({}, {'_id': 0})) 
+    articles = list(db.articles.find({}, {'_id': 0}))  # Ambil semua artikel dari MongoDB, tanpa menyertakan `_id`.
     return {'articles': articles}, 200
 
 @app.route('/update_article/<string:title>', methods=['GET', 'POST'])
 def update_article(title):
     if request.method == 'POST':
+        # Ambil data dari form
         new_title = request.form['title']
         description = request.form['description']
         category = request.form['category']
         
+        # Perbarui data di MongoDB
         db.articles.update_one(
-            {'title': title},
+            {'title': title},  # Cari berdasarkan judul lama
             {'$set': {
                 'title': new_title,
                 'description': description,
@@ -211,11 +221,13 @@ def update_article(title):
         flash('Article updated successfully!', 'success')
         return redirect(url_for('dashboard'))
 
+    # Ambil artikel untuk di-update berdasarkan judul
     article = db.articles.find_one({'title': title})
     return render_template('update.html', article=article)
 
 @app.route('/delete_article/<string:title>', methods=['POST'])
 def delete_article(title):
+    # Hapus artikel berdasarkan judul
     result = db.articles.delete_one({'title': title})
     if result.deleted_count > 0:
         flash('Article deleted successfully!', 'success')
