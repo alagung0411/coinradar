@@ -423,7 +423,7 @@ button span {
     background-color: var(--c-bg-light);
     color: #2F2E2E;
     border-radius: 14px;
-    border: 4px dotted #2F2E2E;
+    border: 4px dashed #2F2E2E;
     order: 1;
     margin-inline: auto;
 

@@ -1,22 +1,27 @@
+from dotenv import load_dotenv
+
+load_dotenv()
+
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from pymongo import MongoClient
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
-from dotenv import load_dotenv
+from telebot import TeleBot
 from werkzeug.utils import secure_filename
 
-load_dotenv()
 
+MONGODB_URI = os.environ["MONGODB_URI"]
+DB_NAME = os.environ["DB_NAME"]
 
-MONGODB_URI = os.environ.get("MONGODB_URI")
-DB_NAME = os.environ.get("DB_NAME")
+TELEGRAM_BOT_TOKEN = os.environ["TELEGRAM_BOT_TOKEN"]
+TELEGRAM_ID = os.environ["TELEGRAM_ID"]
 
 client = MongoClient(MONGODB_URI)
 db = client[DB_NAME]
 
 app = Flask(__name__)
 
-app.secret_key = os.urandom(24)
+app.secret_key = bytes.fromhex(os.environ['SECRET_KEY'])
 
 UPLOAD_FOLDER = 'static/uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -29,9 +34,26 @@ def home():
 def about():
     return render_template('About.html')
 
-@app.route('/contact')
+@app.route('/contact', methods = ['GET', 'POST'])
 def contact():
-    return render_template('Contact.html')
+    if request.method == 'GET':
+        return render_template('Contact.html')
+
+    name = request.form['name']
+    email = request.form['email']
+    message = request.form['message']
+
+    bot = TeleBot(TELEGRAM_BOT_TOKEN, parse_mode = 'HTML', threaded = False)
+    text = f"""
+Ada request artikel dari {name} {email}
+
+Isi Pesan: {message} 
+""".strip()
+    print(TELEGRAM_ID)
+    print(bot.get_me())
+    bot.send_message(TELEGRAM_ID, text)
+    flash("Pesan berhasil dikirim", 'success')
+    return redirect('/contact')
 
 @app.route('/adminpage')
 def dashboard():
@@ -90,9 +112,38 @@ def logout():
     flash('You have logged out.', 'info')
     return redirect(url_for('home'))
 
-@app.route('/publish')
-def publish():
+@app.route('/publish', methods=['GET', 'POST'])
+def publish_article():
+    if request.method == 'POST':
+        title = request.form['title']
+        description = request.form['description']
+        category = request.form['category']
+        
+        if 'thumbnail' in request.files:
+            thumbnail_file = request.files['thumbnail']
+            if thumbnail_file and allowed_file(thumbnail_file.filename):
+                filename = secure_filename(thumbnail_file.filename)
+                thumbnail_file.save(os.path.join('static/uploads', filename))
+                thumbnail_path = f'uploads/{filename}'
+            else:
+                thumbnail_path = None
+        else:
+            thumbnail_path = None
+
+        db.articles.insert_one({
+            'title': title,
+            'description': description,
+            'category': category,
+            'thumbnail': thumbnail_path
+        })
+        flash('Article published successfully!', 'success')
+        return redirect(url_for('publish_article'))
+
     return render_template('publish.html')
+
+def allowed_file(filename):
+    allowed_extensions = {'png', 'jpg', 'jpeg', 'gif'}
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in allowed_extensions
 
 @app.route('/singlepage')
 def singlepage():

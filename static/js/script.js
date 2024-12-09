@@ -75,7 +75,7 @@
   });
   
   function handleFile(file) {
-      if (file && file.size <= 10 * 1024 * 1024) { // Max 10MB
+      if (file && file.size <= 5 * 1024 * 1024) { // Max 5MB
           const reader = new FileReader();
           reader.onload = (e) => {
               preview.src = e.target.result;
@@ -83,7 +83,7 @@
           };
           reader.readAsDataURL(file);
       } else {
-          alert("File size must be less than 10MB.");
+          alert("File size must be less than 5MB.");
       }
   }
 }
