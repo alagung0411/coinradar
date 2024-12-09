@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CoinRadar Login</title>
+    <title>CoinRadar Forgot Password</title>
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -11,37 +12,37 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #f5f5f5;
+            background: #fff;
             margin: 0;
             color: #333;
         }
 
         .wrapper {
             display: flex;
-            width: 80%;
-            max-width: 1100px;
-            background-color: white;
-            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
+            flex-direction: row;
+            width: 90%;
+            max-width: 1000px;
+            background: #fff;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
             overflow: hidden;
             animation: fadeIn 0.8s ease-out;
         }
 
         .welcome-section {
             flex: 2;
-            background-color: transparent;
-            color: gray;
+            background: #f7f9fc;
+            color: #007bff;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 0px;
+            padding: 40px;
         }
 
         .welcome-section .logo img {
-            width: 400px; 
+            width: 250px;
             margin-bottom: 20px;
-            background-color: transparent;
         }
 
         .welcome-section h1 {
@@ -49,48 +50,35 @@
             margin: 10px 0;
             text-align: center;
             font-weight: 600;
-            color: #333;
         }
 
         .welcome-section span {
             color: #ffb800;
         }
 
-        .login-section {
-            flex: 1;
+        .reset-section {
+            flex: 3;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding: 80px 60px;
+            padding: 40px 30px;
+            background: #fff;
             animation: slideIn 0.6s ease-in-out;
         }
 
-        .login-section h2 {
+        .reset-section h2 {
             margin-bottom: 20px;
-            font-size: 32px;
+            font-size: 28px;
             font-weight: 600;
-            color: #333;
+            color: black;
             text-align: center;
         }
 
-        .signup-text {
+        .reset-section p {
             font-size: 14px;
-            color: #666;
+            color: black;
             margin-bottom: 30px;
             text-align: center;
-        }
-
-        .signup-text a {
-            color: #007bff;
-            font-style: italic;
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s ease;
-        }
-
-        .signup-text a:hover {
-            text-decoration: underline;
-            color: #0056b3;
         }
 
         .form-group {
@@ -100,16 +88,18 @@
 
         .form-group input {
             width: 100%;
-            padding: 12px 40px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            padding: 12px 15px 12px 45px;
+            border: 1px solid #ddd;
+            border-radius: 50px;
             font-size: 16px;
-            box-sizing: border-box;
-            transition: border-color 0.3s ease;
+            color: black;
+            background: #f5f5f5;
+            transition: all 0.3s ease;
         }
 
         .form-group input:focus {
             border-color: #007bff;
+            background: #fff;
             outline: none;
         }
 
@@ -119,17 +109,7 @@
             top: 50%;
             transform: translateY(-50%);
             font-size: 18px;
-            color: #555;
-        }
-
-        .form-group .icon-right {
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 18px;
-            color: #555;
-            cursor: pointer;
+            color: black;
         }
 
         .btn {
@@ -142,7 +122,7 @@
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
-            transition: background 0.3s ease, transform 0.3s ease;
+            transition: all 0.3s ease;
         }
 
         .btn:hover {
@@ -150,32 +130,10 @@
             transform: scale(1.05);
         }
 
-        .google-section {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .google-section p {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 10px;
-        }
-
-        .google-logo {
-            width: 40px;
-            height: 40px;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-
-        .google-logo:hover {
-            transform: scale(1.2);
-        }
-
         .footer {
             margin-top: 20px;
             font-size: 12px;
-            color: #999;
+            color: #aaa;
             text-align: center;
         }
 
@@ -183,6 +141,7 @@
             0% {
                 opacity: 0;
             }
+
             100% {
                 opacity: 1;
             }
@@ -193,67 +152,53 @@
                 transform: translateX(20px);
                 opacity: 0;
             }
+
             100% {
                 transform: translateX(0);
                 opacity: 1;
             }
         }
-        
-
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
+
 <body>
     <div class="wrapper">
         <div class="welcome-section">
-            <h1>Selamat Bergabung Bersama</h1> 
-            <h1>Komunitas <span style="font-style: italic; color: yellow;">CoinRadar</span></h1>
+            <h1>Reset Kata Sandi Anda</h1>
             <div class="logo">
                 <img src="static/logo.png" alt="logo">
             </div>
         </div>
 
-        <div class="login-section">
-            <h2>Login</h2>
-            <p>Please Login to Your Account.</p>
-            <p>Haven't an account? <a href="/signup">Sign Up</a></p>
-            <form action="/login" method="POST">
+        <div class="reset-section">
+            <h2>Reset Password</h2>
+            <p>Masukkan informasi Anda untuk memulai proses reset kata sandi.</p>
+
+            <!-- Form untuk email (pertama kali) -->
+            {% if not email %}
+            <form action="/fpass" method="POST">
                 <div class="form-group">
-                    <i class="icon-left fas fa-envelope"></i>
+                    <i class="icon-left fas fa-user"></i>
                     <input type="email" name="email" placeholder="Email" required>
                 </div>
+                <button class="btn" type="submit">Lanjutkan</button>
+            </form>
+            {% else %}
+            <!-- Form untuk reset password (muncul setelah email ditemukan) -->
+            <form action="/fpass" method="POST">
                 <div class="form-group">
                     <i class="icon-left fas fa-lock"></i>
-                    <input type="password" name="password" id="password" placeholder="Password" required>
-                    <i class="icon-right fas fa-eye" id="toggle-password" onclick="togglePassword()"></i>
+                    <input type="password" name="password" placeholder="Password Baru" required>
+                    <input type="hidden" name="email" value="{{ email }}"> <!-- Pass email secara tersembunyi -->
                 </div>
-                <p><a href="/fpass">Forget Password?</a></p>
-
-                <button class="btn" type="submit">Login</button>
+                <button class="btn" type="submit">Atur Ulang Kata Sandi</button>
             </form>
-            <div class="google-section">
-                <p>or continue with account</p>
-                <img src="static/google.png" alt="Google Logo" class="google-logo">
-            </div>
+            {% endif %}
+
             <div class="footer">© 2024 CoinRadar. All rights reserved.</div>
         </div>
     </div>
-
-    <script>
-        function togglePassword() {
-            var passwordInput = document.getElementById('password');
-            var toggleIcon = document.getElementById('toggle-password');
-
-            if (passwordInput.type === "password") {
-                passwordInput.type = "text";
-                toggleIcon.classList.remove('fa-eye');
-                toggleIcon.classList.add('fa-eye-slash');
-            } else {
-                passwordInput.type = "password";
-                toggleIcon.classList.remove('fa-eye-slash');
-                toggleIcon.classList.add('fa-eye');
-            }
-        }
-    </script>
 </body>
+
 </html>

@@ -287,6 +287,11 @@ button span {
     color: #212529;
 }
 
+.dropzone:hover {
+    border-color: #007bff;
+    color: #007bff;
+}
+
 .form-select {
     display: block;
     width: 100%;
@@ -371,3 +376,23 @@ textarea {
     margin-end: 3rem;
 } */
 /* ---------->>> MAIN - END <<-------------- */
+
+/* ---------->>> Drag & Drop <<------------ */
+/* .dropzone {
+    border: 2px dashed #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    text-align: center;
+    color: #888;
+    cursor: pointer;
+    transition: border-color 0.3s;
+} */
+
+/* #preview {
+    max-height: 200px;
+    object-fit: contain;
+    border: 1px solid #ddd;
+    padding: 5px;
+    border-radius: 5px;
+} */
+/* ---------->>> Drag & Drop END <<------------ */

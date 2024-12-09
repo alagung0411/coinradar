@@ -8,13 +8,11 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import os
 from telebot import TeleBot
 from werkzeug.utils import secure_filename
+from datetime import datetime
 
 
 MONGODB_URI = os.environ["MONGODB_URI"]
 DB_NAME = os.environ["DB_NAME"]
-
-TELEGRAM_BOT_TOKEN = os.environ["TELEGRAM_BOT_TOKEN"]
-TELEGRAM_ID = os.environ["TELEGRAM_ID"]
 
 client = MongoClient(MONGODB_URI)
 db = client[DB_NAME]
@@ -59,21 +57,57 @@ Isi Pesan: {message}
 def dashboard():
     return render_template('AdminPage.html')
 
+@app.route('/fpass', methods=['GET', 'POST'])
+def fpass():
+    if request.method == 'POST':
+        if 'email' in request.form and 'password' not in request.form:
+            email = request.form['email']
+            user = db.users.find_one({'email': email})
+
+            if user:
+                flash('Email ditemukan. Silakan masukkan password baru.', 'success')
+                return render_template('fpass.html', email=email)  
+            else:
+                flash('Email tidak ditemukan. Mohon periksa alamat email Anda.', 'danger')
+
+        elif 'password' in request.form:
+            email = request.form['email']
+            new_password = request.form['password']
+
+            if not new_password:
+                flash('Password baru tidak boleh kosong.', 'danger')
+                return render_template('fpass.html', email=email)
+
+            hashed_password = generate_password_hash(new_password)
+
+            result = db.users.update_one({'email': email}, {'$set': {'password': hashed_password}})
+            
+            if result.modified_count > 0:
+                flash('Password berhasil direset. Silakan login.', 'success')
+                return redirect(url_for('login'))
+            else:
+                flash('Gagal memperbarui password. Silakan coba lagi.', 'danger')
+
+    return render_template('fpass.html')
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        username = request.form['username']
+        email = request.form['email']
         password = request.form['password']
 
-        # Cek apakah user ada dalam database
-        user = db.users.find_one({'username': username})
+        user = db.users.find_one({'email': email})
 
         if user and check_password_hash(user['password'], password):
-            session['username'] = username
+            session['email'] = email
+            session['role'] = user['role']
             flash('Login successful!', 'success')
-            return redirect(url_for('dashboard'))
+            if user['role'] == 'admin':
+                return redirect(url_for('adminpage'))
+            elif user['role'] == 'user':
+                return redirect(url_for('home')) 
         else:
-            flash('Invalid username or password', 'danger')
+            flash('Invalid username or password.', 'danger')
 
     return render_template('login.html')
 
@@ -83,24 +117,20 @@ def signup():
         username = request.form['username']
         email = request.form['email']
         password = request.form['password']
-        avatar = request.form.get('avatar')  # Menyimpan avatar jika ada
+        role = request.form['role']  
+        avatar = request.form.get('avatar') 
 
-        # Validasi input
-        if not username or not email or not password:
-            flash("Please fill in all fields.", 'danger')
-            return redirect(url_for('signup'))
 
-        # Hash password sebelum disimpan
         hashed_password = generate_password_hash(password)
 
-        # Simpan data pengguna ke MongoDB
         db.users.insert_one({
             'username': username,
             'email': email,
             'password': hashed_password,
+            'role': role,
             'avatar': avatar
         })
-        
+
         flash('Signup successful! Please log in.', 'success')
         return redirect(url_for('login'))
 
@@ -109,6 +139,7 @@ def signup():
 @app.route('/logout')
 def logout():
     session.pop('username', None)
+    session.pop('role', None)
     flash('You have logged out.', 'info')
     return redirect(url_for('home'))
 
@@ -123,19 +154,23 @@ def publish_article():
             thumbnail_file = request.files['thumbnail']
             if thumbnail_file and allowed_file(thumbnail_file.filename):
                 filename = secure_filename(thumbnail_file.filename)
-                thumbnail_file.save(os.path.join('static/uploads', filename))
+                thumbnail_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
                 thumbnail_path = f'uploads/{filename}'
             else:
                 thumbnail_path = None
         else:
             thumbnail_path = None
 
+        published_at = datetime.now()
+
         db.articles.insert_one({
             'title': title,
             'description': description,
             'category': category,
-            'thumbnail': thumbnail_path
+            'thumbnail': thumbnail_path,
+            'published_at': published_at  
         })
+
         flash('Article published successfully!', 'success')
         return redirect(url_for('publish_article'))
 
@@ -149,44 +184,41 @@ def allowed_file(filename):
 def singlepage():
     return render_template('singlepage.html')
 
-# Logic Publish Articles
+@app.route('/articles', methods=['GET'])
+def get_articles():
+    articles = list(db.articles.find({}, {'_id': 0})) 
+    return {'articles': articles}, 200
 
-@app.route('/publish', methods=['GET', 'POST'])
-def publish_article():
+@app.route('/update_article/<string:title>', methods=['GET', 'POST'])
+def update_article(title):
     if request.method == 'POST':
-        title = request.form['title']
+        new_title = request.form['title']
         description = request.form['description']
         category = request.form['category']
         
-        # Check if a file was uploaded
-        if 'thumbnail' in request.files:
-            thumbnail_file = request.files['thumbnail']
-            if thumbnail_file and allowed_file(thumbnail_file.filename):
-                # Secure the file name and save it
-                filename = secure_filename(thumbnail_file.filename)
-                thumbnail_file.save(os.path.join('static/uploads', filename))
-                thumbnail_path = f'uploads/{filename}'
-            else:
-                thumbnail_path = None
-        else:
-            thumbnail_path = None
+        db.articles.update_one(
+            {'title': title},
+            {'$set': {
+                'title': new_title,
+                'description': description,
+                'category': category,
+                'updated_at': datetime.now()
+            }}
+        )
+        flash('Article updated successfully!', 'success')
+        return redirect(url_for('dashboard'))
 
-        # Save the article data to MongoDB
-        db.articles.insert_one({
-            'title': title,
-            'description': description,
-            'category': category,
-            'thumbnail': thumbnail_path
-        })
-        flash('Article published successfully!', 'success')
-        return redirect(url_for('publish'))
+    article = db.articles.find_one({'title': title})
+    return render_template('update.html', article=article)
 
-    return render_template('publish.html')
-
-def allowed_file(filename):
-    # Ensure the file has a valid extension
-    allowed_extensions = {'png', 'jpg', 'jpeg', 'gif'}
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in allowed_extensions
+@app.route('/delete_article/<string:title>', methods=['POST'])
+def delete_article(title):
+    result = db.articles.delete_one({'title': title})
+    if result.deleted_count > 0:
+        flash('Article deleted successfully!', 'success')
+    else:
+        flash('Failed to delete the article. Article not found.', 'error')
+    return redirect(url_for('dashboard'))
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run('0.0.0.0', port=5000, debug=True)

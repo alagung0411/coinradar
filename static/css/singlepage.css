@@ -598,29 +598,4 @@ button span {
 }
 /* End Main Admin Page */
 
-/* Input Drag & Drop Publish */
-.dropzone {
-    border: 2px dashed #ccc;
-    border-radius: 5px;
-    padding: 20px;
-    text-align: center;
-    color: #888;
-    cursor: pointer;
-    transition: border-color 0.3s;
-}
-
-.dropzone:hover {
-    border-color: #007bff;
-    color: #007bff;
-}
-
-#preview {
-    max-height: 200px;
-    object-fit: contain;
-    border: 1px solid #ddd;
-    padding: 5px;
-    border-radius: 5px;
-}
-/* END Publish */
-
 /* ---------->>> MAIN - END <<-------------- */
