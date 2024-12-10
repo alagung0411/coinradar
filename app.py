@@ -106,7 +106,7 @@ def login():
             session['role'] = user['role']
             flash('Login successful!', 'success')
             if user['role'] == 'admin':
-                return redirect(url_for('adminpage'))
+                return redirect(url_for('dashboard'))
             elif user['role'] == 'user':
                 return redirect(url_for('home')) 
         else:
