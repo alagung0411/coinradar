@@ -3,19 +3,13 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from flask import Flask, render_template, request, redirect, url_for, session, flash
-from pymongo import MongoClient
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
 from telebot import TeleBot
 from werkzeug.utils import secure_filename
 from datetime import datetime
-
-
-MONGODB_URI = os.environ["MONGODB_URI"]
-DB_NAME = os.environ["DB_NAME"]
-
-client = MongoClient(MONGODB_URI)
-db = client[DB_NAME]
+from helpers.auth import user_middleware, User, EmailUsernameNotUnique
+from helpers.db import db
 
 app = Flask(__name__)
 
@@ -26,6 +20,11 @@ TELEGRAM_ID = os.environ["TELEGRAM_ID"]
 
 UPLOAD_FOLDER = 'static/uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+@app.context_processor
+@user_middleware
+def global_context(user: User):
+    return dict(user = user)
 
 @app.route('/')
 def home():
@@ -50,14 +49,16 @@ Ada request artikel dari {name} {email}
 
 Isi Pesan: {message} 
 """.strip()
-    print(TELEGRAM_ID)
-    print(bot.get_me())
     bot.send_message(TELEGRAM_ID, text)
     flash("Pesan berhasil dikirim", 'success')
     return redirect('/contact')
 
 @app.route('/adminpage')
-def dashboard():
+@user_middleware
+def dashboard(user: User):
+    print(user.role)
+    # print(user.is_login())
+    # print(user.username)
     return render_template('AdminPage.html')
 
 @app.route('/fpass', methods=['GET', 'POST'])
@@ -94,20 +95,21 @@ def fpass():
     return render_template('fpass.html')
 
 @app.route('/login', methods=['GET', 'POST'])
-def login():
+@user_middleware
+def login(user: User):
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
 
-        user = db.users.find_one({'email': email})
+        client = db.users.find_one({'email': email})
 
-        if user and check_password_hash(user['password'], password):
-            session['email'] = email
-            session['role'] = user['role']
+        if client and check_password_hash(client['password'], password):
+            # print(client)
+            user.login(client['_id'])
             flash('Login successful!', 'success')
-            if user['role'] == 'admin':
+            if client['role'] == 'admin':
                 return redirect(url_for('dashboard'))
-            elif user['role'] == 'user':
+            elif client['role'] == 'user':
                 return redirect(url_for('home')) 
         else:
             flash('Invalid username or password.', 'danger')
@@ -123,26 +125,21 @@ def signup():
         role = request.form['role']  
         avatar = request.form.get('avatar') 
 
-
-        hashed_password = generate_password_hash(password)
-
-        db.users.insert_one({
-            'username': username,
-            'email': email,
-            'password': hashed_password,
-            'role': role,
-            'avatar': avatar
-        })
-
+        try:
+            User.create(username, email, password, role, avatar)
+        except EmailUsernameNotUnique:
+            flash('Username/email already exists', 'error')
+            return redirect(url_for('signup'))            
+        
         flash('Signup successful! Please log in.', 'success')
         return redirect(url_for('login'))
 
     return render_template('signup.html')
 
 @app.route('/logout')
-def logout():
-    session.pop('username', None)
-    session.pop('role', None)
+@user_middleware
+def logout(user: User):
+    user.logout()
     flash('You have logged out.', 'info')
     return redirect(url_for('home'))
 
