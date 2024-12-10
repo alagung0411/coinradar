@@ -23,6 +23,8 @@ app.secret_key = bytes.fromhex(os.environ['SECRET_KEY'])
 
 TELEGRAM_BOT_TOKEN = os.environ["TELEGRAM_BOT_TOKEN"]
 TELEGRAM_ID = os.environ["TELEGRAM_ID"]
+# TELEGRAM_BOT_TOKEN = "8187023502:AAFFOCiE0kEbbGe6ymKfddQm7FkRAT6KmGY"
+# TELEGRAM_ID = "6263694482"
 
 UPLOAD_FOLDER = 'static/uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
