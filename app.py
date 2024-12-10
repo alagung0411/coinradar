@@ -56,10 +56,15 @@ Isi Pesan: {message}
 @app.route('/adminpage')
 @user_middleware
 def dashboard(user: User):
-    print(user.role)
+    # print(user.role)
     # print(user.is_login())
     # print(user.username)
+    
     return render_template('AdminPage.html')
+    # if user.role == "admin":
+    #     return render_template('AdminPage.html')
+
+    # return redirect(url_for('home'))
 
 @app.route('/fpass', methods=['GET', 'POST'])
 def fpass():
