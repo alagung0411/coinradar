@@ -4,137 +4,47 @@
 
 {% block extrahead %}
 <link rel="stylesheet" href="/static/css/style.css" />
-{% endblock%}
+{% endblock %}
 
 {% block content %}
 <main class="main">
     <div class="banner">
-        <div class="article-banner">
-            <img src="../static/assets/img/thumbnaile-1.jpg" alt="" />
-            <div class="wrap-article_info">
-                <h3>Title Article</h3>
-                <p class="date">12 November 2024 <span class="label">crypto</span></p>
+        {% for article in latest_articles %}
+        <a href="{{ url_for('singlepage', title=article['title']) }}"> <!-- Menggunakan 'title' untuk parameter -->
+            <div class="article-banner">
+                <img src="{{ url_for('static', filename=article.thumbnail) }}" alt="{{ article.title }}" />
+                <div class="wrap-article_info">
+                    <h3>{{ article.title }}</h3>
+                    <p class="date">{{ article.published_at.strftime('%d %B %Y') }} <span class="label">{{
+                            article.category }}</span></p>
+                </div>
             </div>
-        </div>
-        <div class="article-banner">
-            <img src="../static/assets/img/thumbnaile-1.jpg" alt="" />
-            <div class="wrap-article_info">
-                <h3>Title Article</h3>
-                <p class="date">12 November 2024 <span class="label">crypto</span></p>
-            </div>
-        </div>
-        <div class="article-banner">
-            <img src="../static/assets/img/thumbnaile-1.jpg" alt="" />
-            <div class="wrap-article_info">
-                <h3>Title Article</h3>
-                <p class="date">12 November 2024 <span class="label">crypto</span></p>
-            </div>
-        </div>
+            {% endfor %}
     </div>
+
     <div class="content">
         <div class="list-articles">
-            <article class="card-article 1">
-                <div class="thumbnaile">
-                    <img src="../static/assets/img/thumbnaile-1.jpg" alt="" />
-                </div>
-                <div class="article-info">
-                    <div class="info">
-                        <!-- <h3>TITle Article</h3> -->
-                        <h3>Lorem ipsum dolor sit amet consectetur.</h3>
-                        <p>12 November 2024 <span>Crypto</span></p>
+            {% for article in articles %}
+            <a href="{{ url_for('singlepage', title=article['title']) }}"> <!-- Menggunakan 'title' untuk parameter -->
+                <article class="card-article">
+                    <div class="thumbnaile">
+                        <img src="{{ url_for('static', filename=article.thumbnail) }}" alt="{{ article.title }}" />
                     </div>
-                    <div class="describe">
-                        <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                            Veniam, laborum itaque optio enim officiis ipsa, magni
-                            mollitia ratione dolor ad voluptatem exercitationem illum,
-                            vitae commodi totam consequatur libero atque. Voluptas.
-                        </p>
+                    <div class="article-info">
+                        <div class="info">
+                            <h3>{{ article.title }}</h3>
+                            <p>{{ article.published_at.strftime('%d %B %Y') }} <span>{{ article.category }}</span></p>
+                        </div>
+                        <div class="describe">
+                            <p>{{ article.description }}</p>
+                        </div>
                     </div>
-                </div>
-            </article>
-            <article class="card-article 2">
-                <div class="thumbnaile">
-                    <img src="../static/assets/img/thumbnaile-2.jpg" alt="" />
-                </div>
-                <div class="article-info">
-                    <div class="info">
-                        <!-- <h3>TITle Article</h3> -->
-                        <h3>Lorem ipsum dolor sit amet consectetur.</h3>
-                        <p>12 November 2024 <span>Crypto</span></p>
-                    </div>
-                    <div class="describe">
-                        <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                            Veniam, laborum itaque optio enim officiis ipsa, magni
-                            mollitia ratione dolor ad voluptatem exercitationem illum,
-                            vitae commodi totam consequatur libero atque. Voluptas.
-                        </p>
-                    </div>
-                </div>
-            </article>
-            <article class="card-article 3">
-                <div class="thumbnaile">
-                    <img src="../static/assets/img/thumbnaile-3.jpg" alt="" />
-                </div>
-                <div class="article-info">
-                    <div class="info">
-                        <!-- <h3>TITle Article</h3> -->
-                        <h3>Lorem ipsum dolor sit amet consectetur.</h3>
-                        <p>12 November 2024 <span>Crypto</span></p>
-                    </div>
-                    <div class="describe">
-                        <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                            Veniam, laborum itaque optio enim officiis ipsa, magni
-                            mollitia ratione dolor ad voluptatem exercitationem illum,
-                            vitae commodi totam consequatur libero atque. Voluptas.
-                        </p>
-                    </div>
-                </div>
-            </article>
-            <article class="card-article 4">
-                <div class="thumbnaile">
-                    <img src="../static/assets/img/thumbnaile-4.jpg" alt="" />
-                </div>
-                <div class="article-info">
-                    <div class="info">
-                        <!-- <h3>TITle Article</h3> -->
-                        <h3>Lorem ipsum dolor sit amet consectetur.</h3>
-                        <p>12 November 2024 <span>Crypto</span></p>
-                    </div>
-                    <div class="describe">
-                        <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                            Veniam, laborum itaque optio enim officiis ipsa, magni
-                            mollitia ratione dolor ad voluptatem exercitationem illum,
-                            vitae commodi totam consequatur libero atque. Voluptas.
-                        </p>
-                    </div>
-                </div>
-            </article>
-            <article class="card-article 5">
-                <div class="thumbnaile">
-                    <img src="/static/assets/img/thumbnaile-5.jpg" alt="" />
-                </div>
-                <div class="article-info">
-                    <div class="info">
-                        <!-- <h3>TITle Article</h3> -->
-                        <h3>Lorem ipsum dolor sit amet consectetur.</h3>
-                        <p>12 November 2024 <span>Crypto</span></p>
-                    </div>
-                    <div class="describe">
-                        <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                            Veniam, laborum itaque optio enim officiis ipsa, magni
-                            mollitia ratione dolor ad voluptatem exercitationem illum,
-                            vitae commodi totam consequatur libero atque. Voluptas.
-                        </p>
-                    </div>
-                </div>
-            </article>
+                </article>
+            </a>
+            {% endfor %}
         </div>
     </div>
+
     <aside class="aside">
         <div class="card-regist">
             <p>
@@ -145,4 +55,4 @@
         </div>
     </aside>
 </main>
-{% endblock %}
+{% endblock %}

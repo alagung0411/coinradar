@@ -28,7 +28,11 @@ def global_context(user: User):
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    latest_articles = list(db.articles.find().sort("published_at", -1).limit(3))
+
+    all_articles = list(db.articles.find().sort("published_at", -1))
+
+    return render_template('index.html', latest_articles=latest_articles, articles=all_articles)
 
 @app.route('/about')
 def about():
@@ -180,9 +184,15 @@ def allowed_file(filename):
     allowed_extensions = {'png', 'jpg', 'jpeg', 'gif'}
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in allowed_extensions
 
-@app.route('/singlepage')
-def singlepage():
-    return render_template('singlepage.html')
+@app.route('/singlepage/<string:title>', methods=['GET'])
+def singlepage(title):
+    article = db.articles.find_one({'title': title}, {'_id': 0})
+    
+    if not article:
+        flash("Artikel tidak ditemukan", "danger")
+        return redirect(url_for('home'))  # Redirect ke halaman utama jika artikel tidak ditemukan
+    
+    return render_template('singlepage.html', article=article)
 
 @app.route('/articles', methods=['GET'])
 def get_articles():

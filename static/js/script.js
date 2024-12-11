@@ -87,3 +87,10 @@
       }
   }
 }
+
+{
+  document.getElementById('title').addEventListener('input', function () {
+    let words = this.value.split(' ');
+    this.value = words.map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
+});
+}
