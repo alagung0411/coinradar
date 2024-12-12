@@ -219,14 +219,16 @@
             <p>Haven't an account? <a href="/signup">Sign Up</a></p>
             <form action="/login" method="POST">
                 <div class="form-group">
-                    <i class="icon-left fas fa-user"></i>
-                    <input type="text" name="username" placeholder="Username" required>
+                    <i class="icon-left fas fa-envelope"></i>
+                    <input type="email" name="email" placeholder="Email" required>
                 </div>
                 <div class="form-group">
                     <i class="icon-left fas fa-lock"></i>
                     <input type="password" name="password" id="password" placeholder="Password" required>
                     <i class="icon-right fas fa-eye" id="toggle-password" onclick="togglePassword()"></i>
                 </div>
+                <p><a href="/fpass">Forget Password?</a></p>
+
                 <button class="btn" type="submit">Login</button>
             </form>
             <div class="google-section">
@@ -236,6 +238,8 @@
             <div class="footer">© 2024 CoinRadar. All rights reserved.</div>
         </div>
     </div>
+    
+    {% include "components/flash.html" %}
 
     <script>
         function togglePassword() {
