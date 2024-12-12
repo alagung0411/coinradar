@@ -10,6 +10,7 @@ from werkzeug.utils import secure_filename
 from datetime import datetime
 from helpers.auth import user_middleware, User, EmailUsernameNotUnique
 from helpers.db import db
+from helpers.webforms import SearchForm
 
 app = Flask(__name__)
 
@@ -22,9 +23,11 @@ UPLOAD_FOLDER = 'static/uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.context_processor
+    
 @user_middleware
 def global_context(user: User):
-    return dict(user = user)
+    form = SearchForm()
+    return dict(user = user, form = form)
 
 @app.route('/')
 def home():
@@ -224,6 +227,23 @@ def delete_article(title):
     else:
         flash('Failed to delete the article. Article not found.', 'error')
     return redirect(url_for('dashboard'))
+
+# @app.context_processor
+# def base():
+#     form = SearchForm()
+#     return dict(form=form)
+
+@app.route('/search', methods=['GET', 'POST'])
+def search():
+    form = SearchForm()
+    results = None
+    if form.validate_on_submit():
+        searched = form.searched.data
+        results = list(db.articles.find({"title": {"$regex": searched, "$options": "i"}}))
+    
+    print(results)
+    return render_template('search.html', form=form, searched=searched, results=results)
+    
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
