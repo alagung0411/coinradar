@@ -15,7 +15,7 @@
                 <img src="{{ url_for('static', filename=article.thumbnail) }}" alt="{{ article.title }}" />
                 <div class="wrap-article_info">
                     <h3>{{ article.title }}</h3>
-                    <p class="date">{{ article.published_at.strftime('%d %B %Y') }} <span class="label">{{
+                    <p><span class="date">{{ article.published_at }} </span> <span class="label">{{
                             article.category }}</span></p>
                 </div>
             </div>
@@ -33,7 +33,7 @@
                     <div class="article-info">
                         <div class="info">
                             <h3>{{ article.title }}</h3>
-                            <p>{{ article.published_at.strftime('%d %B %Y') }} <span>{{ article.category }}</span></p>
+                            <p>{{ article.published_at }} <span>{{ article.category }}</span></p>
                         </div>
                         <div class="describe">
                             <p>{{ article.description }}</p>

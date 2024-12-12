@@ -8,7 +8,7 @@ import os
 from telebot import TeleBot
 from werkzeug.utils import secure_filename
 from datetime import datetime
-from helpers.auth import user_middleware, User, EmailUsernameNotUnique
+from helpers.auth import user_middleware, User, EmailUsernameNotUnique, admin_only_middleware, auth_only_middleware
 from helpers.db import db
 from helpers.webforms import SearchForm
 
@@ -61,6 +61,7 @@ Isi Pesan: {message}
     return redirect('/contact')
 
 @app.route('/adminpage')
+@admin_only_middleware
 @user_middleware
 def dashboard(user: User):
     # print(user.role)
@@ -156,6 +157,7 @@ def logout(user: User):
     return redirect(url_for('home'))
 
 @app.route('/publish', methods=['GET', 'POST'])
+@admin_only_middleware
 def publish_article():
     if request.method == 'POST':
         title = request.form['title']
@@ -194,13 +196,32 @@ def allowed_file(filename):
 
 @app.route('/singlepage/<string:title>', methods=['GET'])
 def singlepage(title):
-    article = db.articles.find_one({'title': title}, {'_id': 0})
+    article = db.articles.find_one({'title': title})
     
     if not article:
         flash("Artikel tidak ditemukan", "danger")
         return redirect(url_for('home'))  # Redirect ke halaman utama jika artikel tidak ditemukan
     
-    return render_template('singlepage.html', article=article)
+    comments = list(db.comments.find({"article_id": article['_id']}))
+    # biar ada index (i) pake enumerate bang
+    for i, comment in enumerate(comments):
+        comments[i]['user'] = db.users.find_one({"_id": comment['user_id']})
+
+    # print(comments)        
+    return render_template('singlepage.html', article=article, url=request.url, comments=comments)
+
+@app.route('/singlepage/<string:title>/comment', methods = ['POST'])
+@auth_only_middleware
+@user_middleware
+def article_comment(user: User, title: str = ""):
+    article = db.articles.find_one({'title': title})
+    if not article:
+        flash("Artikel tidak ditemukan", "danger")
+        return redirect(url_for('home'))  # Redirect ke halaman utama jika artikel tidak ditemukan
+    
+    user.add_comment(article['_id'], request.form['text'])
+    flash("Berhasil komentar", "success")
+    return redirect('/singlepage/'+title)
 
 @app.route('/articles', methods=['GET'])
 def get_articles():
