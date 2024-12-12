@@ -1,0 +1,59 @@
+{% extends "layouts/base_with_grid.html" %}
+{% block title %} Search Article {% endblock %}
+
+{% block extrahead %}
+<link rel="stylesheet" href="/static/css/search.css" />
+{% endblock %}
+
+{% block content %}
+<main class="main">
+    <div class="banner-search">
+      <div class="search-header">
+        {% if results %}
+            <p>Your search results :</p>
+            <h1>{{ searched }}</h1>
+        {% else %}
+            <h3>Search Not Found.</h3>
+        {% endif %}
+      </div>
+    </div>
+    <div class="list-article_search">
+      {% if results %}
+        {% for result in results %}
+        <div class="card-article">
+            <div class="wrap-info_article">
+            <span class="label">{{ result.category }}</span>
+            <h1>{{ result.title }}</h1>
+            <span class="date">{{ result.published_at }}</span>
+            <div class="describe">
+                <p>{{ result.description }}</p>
+            </div>
+            </div>
+            <div class="thumbnaile"><img src="/static/{{ result.thumbnail }}" alt=""></div>
+        </div>
+        {% endfor %}
+      {% endif %}  
+    </div>
+  </main>
+<!-- <main class="main">
+    <div class="banner-search">
+        <div class="search-header">
+        </div>
+    </div>
+    {% if results is not none %}
+    <p>You results for <br/><span style="font-weight: 700; margin-top: 1rem;">{{ searched }}</span></p>
+    <br />
+        {% if results %}
+            <ul>
+                {% for result in results %}
+                    <li>{{ result.title }}</li>
+                    <li>{{ result.category }}</li>
+                    <br/>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No Results Found.</p>
+        {% endif %}
+    {% endif %}
+</main> -->
+{% endblock %}
