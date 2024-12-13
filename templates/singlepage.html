@@ -26,9 +26,13 @@
                 <img src="/static/{{ article['thumbnail'] }}" alt="{{ article['title'] }}" />
             </div>
             <article class="article">
-                <p class="text">
-                    {{ article['description'] }}
-                </p>
+                {% for paragraph in article['description'].split('\n') %}
+                {% if paragraph.strip() %}
+                <p class="text">{{ paragraph }}</p>
+                {% else %}
+                <div style="height: 1rem;"></div>
+                {% endif %}
+                {% endfor %}
             </article>
         </div>
     </div>
@@ -43,7 +47,7 @@
         <div class="card-comments">
             <h3>Comments</h3>
             <div class="wrap-comments">
-            {% for comment in comments %}
+                {% for comment in comments %}
                 <div class="list-comments 1">
                     <div class="circle-profile">
                         <img src="{{ comment.user.avatar }}" alt="" />
@@ -60,7 +64,7 @@
                         </p>
                     </div>
                 </div>
-                
+
                 {% endfor %}
             </div>
             <form class="form-input_comment" action="{{url}}/comment" method="post">

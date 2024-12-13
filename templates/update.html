@@ -19,9 +19,10 @@
         <div class="mb-3">
             <label for="category" class="form-label">Kategori</label>
             <select id="category" name="category" class="form-select">
-                <option {% if article.category == 'Cryptocurrency' %}selected{% endif %}>Cryptocurrency</option>
-                <option {% if article.category == 'Blockchain' %}selected{% endif %}>Blockchain</option>
-                <option {% if article.category == 'Finance' %}selected{% endif %}>Finance</option>
+                <option {% if article.category == 'Berita' %}selected{% endif %}>Berita</option>
+                <option {% if article.category == 'Riset' %}selected{% endif %}>Riset</option>
+                <option {% if article.category == 'Tips & Trick' %}selected{% endif %}>Tips & Trick</option>
+                <option {% if article.category == 'Projects' %}selected{% endif %}>Projects</option>
             </select>
         </div>
         <div class="mb-3">
