@@ -23,7 +23,7 @@
         <div class="card-article">
             <div class="wrap-info_article">
             <span class="label">{{ result.category }}</span>
-            <h1>{{ result.title }}</h1>
+            <h1><a href="/singlepage/{{ result.title }}">{{ result.title }}</a></h1>
             <span class="date">{{ result.published_at }}</span>
             <div class="describe">
                 <p>{{ result.description }}</p>
@@ -35,25 +35,4 @@
       {% endif %}  
     </div>
   </main>
-<!-- <main class="main">
-    <div class="banner-search">
-        <div class="search-header">
-        </div>
-    </div>
-    {% if results is not none %}
-    <p>You results for <br/><span style="font-weight: 700; margin-top: 1rem;">{{ searched }}</span></p>
-    <br />
-        {% if results %}
-            <ul>
-                {% for result in results %}
-                    <li>{{ result.title }}</li>
-                    <li>{{ result.category }}</li>
-                    <br/>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>No Results Found.</p>
-        {% endif %}
-    {% endif %}
-</main> -->
 {% endblock %}

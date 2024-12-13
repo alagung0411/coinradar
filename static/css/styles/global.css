@@ -110,10 +110,8 @@ header {
     display: flex;
     align-items: center;
     flex-direction: row;
-    gap: 2.5rem;
-    display: none;
+    gap: 1.5rem;
 }
-/* .wrap-left .btn-toggle_nav { */
 .btn-toggle_nav {
     display: block;
     width: 28px;
@@ -145,7 +143,6 @@ header {
 
 .wrap-left a.logo {
     display: block;
-    transform: translateX(-20%);
     order: 2;
 
     @media (min-width: 1024px) {
@@ -159,11 +156,12 @@ header {
 }
 
 .navigate .toggle-nav_section {
-    position: relative;
+    position: absolute;
     display: block;
-
+    
     @media (min-width: 1024px) {
-        transform: translateX(-40%);
+        position: relative;
+        transform: translateX(0%);
         order: 1;
     }
 }
@@ -182,10 +180,10 @@ header {
     font-size: 0.75rem;
     font-weight: 400;
     letter-spacing: 0.5px;
+    gap: 1rem;
     
     @media (max-width: 1024px) {
         align-items: center;
-        gap: 1rem;
     }
 }
 @media (max-width: 1024px) {
@@ -252,7 +250,8 @@ header {
     border-width: 0;
 }
 .wrap-input input.input-search {
-    width: 15rem;
+    width: min(100%, 15rem);
+    /* width: 15rem; */
     padding-top: 0.75rem;
     padding-bottom: 0.75rem;
     padding-inline-start: 1rem;

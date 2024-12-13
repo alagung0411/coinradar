@@ -14,8 +14,8 @@
             {{ article['title'] }}
         </h1>
         <div class="info-article">
-            <div class="date">
-                <p>{{ article['published_at'].strftime('%d %B %Y') }}</p>
+            <div>
+                <p class="date">{{ article.published_at }}</p>
             </div>
             <div class="label">{{ article['category'] }}</div>
         </div>
@@ -48,7 +48,7 @@
                     <div class="circle-profile">
                         <img src="{{ comment.user.avatar }}" alt="" />
                     </div>
-                    <div>
+                    <div class="wrap-info_comment">
                         <div class="info-comment">
                             <p>
                                 {{ comment.user.username }} -

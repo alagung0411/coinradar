@@ -272,7 +272,7 @@ def search():
         searched = form.searched.data
         results = list(db.articles.find({"title": {"$regex": searched, "$options": "i"}}))
     
-    print(results)
+    # print(results)
     return render_template('search.html', form=form, searched=searched, results=results)
     
 
