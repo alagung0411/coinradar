@@ -46,6 +46,7 @@
     </div>
 
     <aside class="aside">
+        {% if not user.is_login() %}
         <div class="card-regist">
             <p>
                 CoinRadar Update Temukan berita terbaru seputar crypto, projek dan
@@ -53,6 +54,7 @@
             </p>
             <button class="btn-regist" onclick="location.href='/signup'">Register</button>
         </div>
+        {% endif %}
     </aside>
 </main>
 {% endblock %}

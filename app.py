@@ -23,7 +23,6 @@ UPLOAD_FOLDER = 'static/uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.context_processor
-    
 @user_middleware
 def global_context(user: User):
     form = SearchForm()
