@@ -3,3 +3,4 @@ pymongo
 python-dotenv
 granian
 pyTelegramBotAPI
+flask-wtf
