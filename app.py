@@ -73,6 +73,32 @@ def dashboard(user: User):
 
     # return redirect(url_for('home'))
 
+@app.route('/list')
+def list_article():
+    category = request.args.get('category')
+    page = int(request.args.get('page', 1))
+    per_page = 5
+
+    # Filter artikel berdasarkan kategori jika ada
+    query = {'category': category} if category else {}
+    articles = list(db.articles.find(query).skip((page - 1) * per_page).limit(per_page))
+
+    # Ambil 5 artikel terbaru untuk Recent Posts
+    recent_posts = list(db.articles.find().sort('published_at', -1).limit(5))
+
+    # Hitung total halaman
+    total_articles = db.articles.count_documents(query)
+    total_pages = (total_articles + per_page - 1) // per_page
+
+    return render_template(
+        'listarticle.html',
+        articles=articles,
+        selected_category=category,
+        recent_posts=recent_posts,
+        current_page=page,
+        total_pages=total_pages
+    )
+
 @app.route('/fpass', methods=['GET', 'POST'])
 def fpass():
     if request.method == 'POST':
