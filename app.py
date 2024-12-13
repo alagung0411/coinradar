@@ -8,8 +8,9 @@ import os
 from telebot import TeleBot
 from werkzeug.utils import secure_filename
 from datetime import datetime
-from helpers.auth import user_middleware, User, EmailUsernameNotUnique
+from helpers.auth import user_middleware, User, EmailUsernameNotUnique, admin_only_middleware, auth_only_middleware
 from helpers.db import db
+from helpers.webforms import SearchForm
 
 app = Flask(__name__)
 
@@ -22,13 +23,19 @@ UPLOAD_FOLDER = 'static/uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.context_processor
+    
 @user_middleware
 def global_context(user: User):
-    return dict(user = user)
+    form = SearchForm()
+    return dict(user = user, form = form)
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    latest_articles = list(db.articles.find().sort("published_at", -1).limit(3))
+
+    all_articles = list(db.articles.find().sort("published_at", -1))
+
+    return render_template('index.html', latest_articles=latest_articles, articles=all_articles)
 
 @app.route('/about')
 def about():
@@ -54,12 +61,18 @@ Isi Pesan: {message}
     return redirect('/contact')
 
 @app.route('/adminpage')
+@admin_only_middleware
 @user_middleware
 def dashboard(user: User):
-    print(user.role)
+    # print(user.role)
     # print(user.is_login())
     # print(user.username)
+    
     return render_template('AdminPage.html')
+    # if user.role == "admin":
+    #     return render_template('AdminPage.html')
+
+    # return redirect(url_for('home'))
 
 @app.route('/fpass', methods=['GET', 'POST'])
 def fpass():
@@ -144,6 +157,7 @@ def logout(user: User):
     return redirect(url_for('home'))
 
 @app.route('/publish', methods=['GET', 'POST'])
+@admin_only_middleware
 def publish_article():
     if request.method == 'POST':
         title = request.form['title']
@@ -180,9 +194,34 @@ def allowed_file(filename):
     allowed_extensions = {'png', 'jpg', 'jpeg', 'gif'}
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in allowed_extensions
 
-@app.route('/singlepage')
-def singlepage():
-    return render_template('singlepage.html')
+@app.route('/singlepage/<string:title>', methods=['GET'])
+def singlepage(title):
+    article = db.articles.find_one({'title': title})
+    
+    if not article:
+        flash("Artikel tidak ditemukan", "danger")
+        return redirect(url_for('home'))  # Redirect ke halaman utama jika artikel tidak ditemukan
+    
+    comments = list(db.comments.find({"article_id": article['_id']}))
+    # biar ada index (i) pake enumerate bang
+    for i, comment in enumerate(comments):
+        comments[i]['user'] = db.users.find_one({"_id": comment['user_id']})
+
+    # print(comments)        
+    return render_template('singlepage.html', article=article, url=request.url, comments=comments)
+
+@app.route('/singlepage/<string:title>/comment', methods = ['POST'])
+@auth_only_middleware
+@user_middleware
+def article_comment(user: User, title: str = ""):
+    article = db.articles.find_one({'title': title})
+    if not article:
+        flash("Artikel tidak ditemukan", "danger")
+        return redirect(url_for('home'))  # Redirect ke halaman utama jika artikel tidak ditemukan
+    
+    user.add_comment(article['_id'], request.form['text'])
+    flash("Berhasil komentar", "success")
+    return redirect('/singlepage/'+title)
 
 @app.route('/articles', methods=['GET'])
 def get_articles():
@@ -219,6 +258,23 @@ def delete_article(title):
     else:
         flash('Failed to delete the article. Article not found.', 'error')
     return redirect(url_for('dashboard'))
+
+# @app.context_processor
+# def base():
+#     form = SearchForm()
+#     return dict(form=form)
+
+@app.route('/search', methods=['GET', 'POST'])
+def search():
+    form = SearchForm()
+    results = None
+    if form.validate_on_submit():
+        searched = form.searched.data
+        results = list(db.articles.find({"title": {"$regex": searched, "$options": "i"}}))
+    
+    # print(results)
+    return render_template('search.html', form=form, searched=searched, results=results)
+    
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
