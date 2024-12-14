@@ -225,6 +225,10 @@ header {
     }
 }
 .link ul > li.nav-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
     padding: 0.5rem 1.5rem;
     border-radius: 9999px;
     border: 1px solid var(--c-bg-grey-tertiary);

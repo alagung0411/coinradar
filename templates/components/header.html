@@ -4,12 +4,22 @@
       <div class="toggle-nav_section">
         <nav class="link">
           <ul class="nav-menu">
-            <li class="nav-item"><a href="#" class="nav-link">Berita</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">Riset</a></li>
-            <li class="nav-item">
-              <a href="#" class="nav-link">Tips & Trick</a>
+            <li class="nav-item"><a href="/list?category=Berita" class="nav-link">Berita</a></li>
+            <li class="nav-item"><a href="/list?category=Riset" class="nav-link">Riset</a></li>
+            <li class="nav-item"><a href="/list?category={{ 'Tips & Trick'|urlencode }}" class="nav-link">Tips &
+                Trick</a>
+              </a>
             </li>
-            <li class="nav-item"><a href="#" class="nav-link">Projects</a></li>
+            <li class="nav-item"><a href="/list?category=Projects" class="nav-link">Projects</a></li>
+            {% if user.is_login() and user.role == "admin" %}
+            <li class="nav-item"><a href="/adminpage" class="nav-link">Manage</a>
+              <div class="icon-manage" style="display: inline-block; width: 20px;">
+                <svg data-slot="icon" aria-hidden="true" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M13.5 16.875h3.375m0 0h3.375m-3.375 0V13.5m0 3.375v3.375M6 10.5h2.25a2.25 2.25 0 0 0 2.25-2.25V6a2.25 2.25 0 0 0-2.25-2.25H6A2.25 2.25 0 0 0 3.75 6v2.25A2.25 2.25 0 0 0 6 10.5Zm0 9.75h2.25A2.25 2.25 0 0 0 10.5 18v-2.25a2.25 2.25 0 0 0-2.25-2.25H6a2.25 2.25 0 0 0-2.25 2.25V18A2.25 2.25 0 0 0 6 20.25Zm9.75-9.75H18a2.25 2.25 0 0 0 2.25-2.25V6A2.25 2.25 0 0 0 18 3.75h-2.25A2.25 2.25 0 0 0 13.5 6v2.25a2.25 2.25 0 0 0 2.25 2.25Z" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+              </div>
+            </li>
+            {% endif %}
           </ul>
         </nav>
       </div>
