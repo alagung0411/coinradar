@@ -6,10 +6,7 @@
           <ul class="nav-menu">
             <li class="nav-item"><a href="/list?category=Berita" class="nav-link">Berita</a></li>
             <li class="nav-item"><a href="/list?category=Riset" class="nav-link">Riset</a></li>
-            <li class="nav-item"><a href="/list?category={{ 'Tips & Trick'|urlencode }}" class="nav-link">Tips &
-                Trick</a>
-              </a>
-            </li>
+            <li class="nav-item"><a href="/list?category={{ 'Tips & Trick'|urlencode }}" class="nav-link">Tips & Trick</a></li>
             <li class="nav-item"><a href="/list?category=Projects" class="nav-link">Projects</a></li>
             {% if user.is_login() and user.role == "admin" %}
             <li class="nav-item"><a href="/adminpage" class="nav-link">Manage</a>
@@ -25,10 +22,7 @@
       </div>
       <div class="wrap-left">
         <a class="logo" href="/">
-          <img
-            src="../static/assets/img/ForLogo-removebg-preview.png"
-            alt="Logo CoinRadar"
-          />
+          <img src="../static/assets/img/ForLogo-removebg-preview.png" alt="Logo CoinRadar" />
         </a>
         <div class="btn-toggle_nav">
           <div class="bar"></div>
@@ -41,30 +35,14 @@
           {{ form.hidden_tag() }}
           <label for="Search"> Search </label>
 
-          <input
-            type="search"
-            id="Search"
-            name="searched"
-            placeholder="Search for..."
-            class="input-search"
-          />
+          <input type="search" id="Search" name="searched" placeholder="Search for..." class="input-search" />
 
           <span>
             <button type="button">
-              <svg
-                data-slot="icon"
-                fill="none"
-                stroke-width="1.5"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-                aria-hidden="true"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
-                ></path>
+              <svg data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"></path>
               </svg>
             </button>
           </span>
@@ -75,35 +53,19 @@
             <span>Toggle dashboard menu</span>
 
             {% if user.is_login() == True %}
-            <img
-              src="{{ user.avatar }}"
-              alt="avatar profile"
-              class="profile-img"
-            />
+            <img src="{{ user.avatar }}" alt="avatar profile" class="profile-img" />
             {% else %}
-            <img
-              src="/static/assets/img/profile_blank.jpg"
-              alt="profile blank"
-              class="profile-img"
-            />
+            <img src="/static/assets/img/profile_blank.jpg" alt="profile blank" class="profile-img" />
             {% endif %}
           </button>
 
           <div class="card-menu_profile" role="menu" data-site-nav-popover>
             <div class="wrap-menu">
               {% if user.is_login() == True %}
-              <img
-                src="{{ user.avatar }}"
-                alt="avatar profile"
-                class="profile-img"
-              />
+              <img src="{{ user.avatar }}" alt="avatar profile" class="profile-img" />
               <div class="username">{{ user.username }}</div>
               {% else %}
-              <img
-                src="/static/assets/img/profile_blank.jpg"
-                alt="avatar profile"
-                class="profile-img"
-              />
+              <img src="/static/assets/img/profile_blank.jpg" alt="avatar profile" class="profile-img" />
               <div class="username">Username</div>
               {% endif %}
             </div>
@@ -112,20 +74,11 @@
               {% if user.is_login() == True %}
               <a href="/logout" class="btn-logout" role="menuitem">
                 <span class="icon-logout">
-                  <svg
-                    data-slot="icon"
-                    fill="none"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                    aria-hidden="true"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15M12 9l-3 3m0 0 3 3m-3-3h12.75"
-                    ></path>
+                  <svg data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15M12 9l-3 3m0 0 3 3m-3-3h12.75">
+                    </path>
                   </svg>
                 </span>
                 Logout
@@ -133,20 +86,11 @@
               {% else %}
               <a href="/login" class="btn-login" role="menuitem">
                 <span class="icon-login">
-                  <svg
-                    data-slot="icon"
-                    fill="none"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                    aria-hidden="true"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15M12 9l3 3m0 0-3 3m3-3H2.25"
-                    ></path>
+                  <svg data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15M12 9l3 3m0 0-3 3m3-3H2.25">
+                    </path>
                   </svg>
                 </span>
                 Login
