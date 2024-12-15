@@ -200,8 +200,9 @@ def singlepage(title):
     if not article:
         flash("Artikel tidak ditemukan", "danger")
         return redirect(url_for('home'))  # Redirect ke halaman utama jika artikel tidak ditemukan
-    
-    comments = list(db.comments.find({"article_id": article['_id']}))
+
+    comments = list(db.comments.find({"article_id": article['_id']}).sort('published_at', -1))
+    # comments = list(db.comments.find({"article_id": article['_id']}))
     # biar ada index (i) pake enumerate bang
     for i, comment in enumerate(comments):
         comments[i]['user'] = db.users.find_one({"_id": comment['user_id']})
