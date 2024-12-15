@@ -175,7 +175,10 @@
     font-weight: 200;
     color: var(--c-grey-tertiary);
 }
-.article-info p span {
+.article_info p > .date {
+    border: none;
+}
+.article-info > div.info > p > span.label {
     display: inline-block;
     padding: 4px 12px;
     margin-left: 12px;
