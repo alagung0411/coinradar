@@ -33,14 +33,13 @@
             <div class="list-articles">
                 {% for article in articles %}
                 <article class="card-article">
-                    <a href="/article/{{ article.slug }}" class="thumbnaile">
-                        <!-- Thumbnail dengan tautan -->
-                        <img src="/static/{{ article.thumbnail }}" alt="Thumbnail for {{ article.title }}">
+                    <a href="{{ url_for('singlepage', title=article.title) }}" class="thumbnaile">
+                        <img src="{{ url_for('static', filename=article.thumbnail) }}" alt="Thumbnail for {{ article.title }}">
                     </a>
                     <div class="article-info">
                         <div class="info">
                             <!-- Judul Artikel dengan tautan -->
-                            <h3><a href="/article/{{ article.slug }}">{{ article.title }}</a></h3>
+                            <h3><a href="{{ url_for('singlepage', title=article.title) }}">{{ article.title }}</a></h3>
                             <p>{{ article.published_at }} <span>{{ article.category }}</span></p>
                         </div>
                         <div class="describe">
@@ -67,10 +66,11 @@
                 </a>
                 {% endfor %}
 
-                {% if current_page < total_pages %} <a
-                    href="/list?category={{ selected_category }}&page={{ current_page + 1 }}" class="pagination-button">
-                    Next</a>
-                    {% endif %}
+                {% if current_page < total_pages %} 
+                <a href="/list?category={{ selected_category }}&page={{ current_page + 1 }}" class="pagination-button">
+                    Next
+                </a>
+                {% endif %}
             </div>
         </div>
 
@@ -82,11 +82,11 @@
                 <li class="recent-post-item">
                     <div class="recent-post-info">
                         <span class="post-category">{{ post.category }}</span>
-                        <a href="/article/{{ post.slug }}" class="post-title">{{ post.title }}</a>
+                        <a href="{{ url_for('singlepage', title=post.title) }}" class="post-title">{{ post.title }}</a>
                         <p class="post-date">{{ post.published_at.strftime('%d %b %Y') }}</p>
                     </div>
-                    <a href="/article/{{ post.slug }}" class="recent-post-thumbnail">
-                        <img src="/static/{{ post.thumbnail }}" alt="{{ post.title }}">
+                    <a href="{{ url_for('singlepage', title=post.title) }}" class="recent-post-thumbnail">
+                        <img src="{{ url_for('static', filename=post.thumbnail) }}" alt="{{ post.title }}">
                     </a>
                 </li>
                 {% endfor %}
